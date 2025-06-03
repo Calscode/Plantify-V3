@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity } from 'react-native';
-import { CameraButton } from '../src/components/Camera/CameraButton';
+import { CameraButton } from '../components/Camera/CameraButton';
 
 export const ButtonBar = () => {
   return (
