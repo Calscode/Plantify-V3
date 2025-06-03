@@ -11,16 +11,17 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "axios": "^1.9.0",
     "expo": "^53.0.9",
+    "expo-camera": "~16.1.6",
+    "expo-image-picker": "~16.1.4",
+    "expo-media-library": "~17.1.6",
     "expo-status-bar": "~2.2.3",
     "nativewind": "latest",
     "react": "19.0.0",
     "react-native": "0.79.2",
     "react-native-reanimated": "~3.17.4",
-    "react-native-safe-area-context": "^5.4.0",
-    "expo-camera": "~16.1.6",
-    "expo-media-library": "~17.1.6",
-    "expo-image-picker": "~16.1.4"
+    "react-native-safe-area-context": "^5.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
@@ -34,5 +35,6 @@
     "typescript": "~5.8.3"
   },
   "main": "node_modules/expo/AppEntry.js",
-  "private": true
+  "private": true,
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

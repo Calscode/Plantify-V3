@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 const uploadPhoto = (photo: {
   uri: string;
   fileName?: string;
@@ -10,19 +12,17 @@ const uploadPhoto = (photo: {
     type: photo.mimeType || 'image/jpeg',
   } as any);
 
-  fetch('https://your-backend.com/api/upload', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-    body: formData,
-  })
-    .then((res) => res.json())
-    .then((json) => {
-      console.log('API response:', json);
+  axios
+    .post('https://your-backend.com/api/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     })
-    .catch((err) => {
-      console.error('Upload failed:', err);
+    .then((response) => {
+      console.log('API response:', response.data);
+    })
+    .catch((error) => {
+      console.error('Upload failed:', error);
     });
 };
 

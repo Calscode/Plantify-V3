@@ -17,7 +17,7 @@ export const CameraButton = () => {
           photo.fileName = photo.fileName || 'photo.jpg';
           photo.mimeType = photo.mimeType || 'image/jpeg';
 
-          console.log('Captured photo asset:', photo); l
+          console.log('Captured photo asset:', photo); 
           uploadPhoto(photo);
         }
       })
