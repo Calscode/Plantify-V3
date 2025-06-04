@@ -1,9 +1,11 @@
 import { View, Text, TouchableOpacity } from 'react-native';
+
 import { CameraButton } from '../components/Camera/CameraButton';
 
 export const ButtonBar = () => {
   return (
-    <View className="flex-row justify-around items-center bg-white border-t border-gray-300 py-3">
+    <View className="flex-row justify-around items-center bg-white border-t border-gray-300 py-3"
+    >
       <TouchableOpacity className="items-center">
         <Text className="text-gray-700">Home</Text>
       </TouchableOpacity>
