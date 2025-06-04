@@ -13,6 +13,7 @@ export const CameraButton = () => {
       .then((result) => {
         if (!result.canceled) {
           const photo = result.assets[0];
+          console.log(result)
 
           photo.fileName = photo.fileName || 'photo.jpg';
           photo.mimeType = photo.mimeType || 'image/jpeg';
