@@ -12,12 +12,17 @@ import VegCard from "~/components/Screens/Vegcard";
 import PlantsCard from "~/components/Screens/Plantscard";
 import FruitCard from "~/components/Screens/Fruitscard";
 import HintsCard from "~/components/Screens/Hintscard";
+import './global.css';
+import {View} from "react-native"
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
+              <View style={{ flex: 1, paddingBottom: 60 }}>
+
     <SafeAreaProvider>
+
       <NavigationContainer>
         <Header />
         <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
@@ -29,9 +34,11 @@ export default function App() {
           <Stack.Screen name="FruitCard" component={FruitCard} />
           <Stack.Screen name="HintsCard" component={HintsCard} />
         </Stack.Navigator>
-        <ButtonBar />
         <StatusBar style="auto" />
       </NavigationContainer>
+
+              <ButtonBar />
     </SafeAreaProvider>
+</View>
   );
 }
