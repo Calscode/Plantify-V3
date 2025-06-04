@@ -17,7 +17,7 @@ const PlantCard = ({ plant }) => {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "#e7f5e9",
+    backgroundColor: "#f0fdf4",
     borderRadius: 12,
     padding: 16,
     marginBottom: 12,

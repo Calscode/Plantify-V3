@@ -1,61 +1,82 @@
-import { View, Text } from "react-native";
+import React from "react";
+import { View, Text, ScrollView, StyleSheet } from "react-native";
 
 function HintsCard() {
-    return (
-        <View>
-            <Text>
-     🌿 Gardening Hints & Tips: A Quick Guide 🌱
-A Brief History of Gardening 🏺🌻
-Gardening is one of humanity’s oldest hobbies — and necessities! People began cultivating plants over 10,000 years ago in the Neolithic era, shifting from hunter-gatherers to farmers. Ancient civilizations like the Egyptians, Romans, and Chinese developed formal gardens for food, medicine, and beauty. The famous Hanging Gardens of Babylon were one of the Seven Wonders of the Ancient World! Over time, gardening evolved from survival to art and science, blending creativity with practical skills.
+  return (
+    <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.sectionTitle}>🌿 Gardening Hints & Tips: A Quick Guide 🌱</Text>
 
-Best Practices to Grow Like a Pro 🌞💧
-Know Your Soil: Healthy soil is the foundation. Test for pH and nutrients, add compost or organic matter to improve texture and fertility.
+      <Text style={styles.subsectionTitle}>A Brief History of Gardening 🏺🌻</Text>
+      <Text style={styles.paragraph}>
+        Gardening is one of humanity’s oldest hobbies — and necessities! People began cultivating plants over 10,000 years ago...
+      </Text>
 
-Right Plant, Right Place: Match plants to your climate, soil, and sunlight for happier, stronger growth.
+      <Text style={styles.subsectionTitle}>Best Practices to Grow Like a Pro 🌞💧</Text>
+      <Text style={styles.bullet}>• Know Your Soil: Test pH and add compost to improve fertility.</Text>
+      <Text style={styles.bullet}>• Right Plant, Right Place: Match plant needs to climate, soil & sun.</Text>
+      <Text style={styles.bullet}>• Water Wisely: Deep watering builds strong roots. Mulch helps!</Text>
+      <Text style={styles.bullet}>• Feed Consistently: Use compost and balanced fertilizers carefully.</Text>
+      <Text style={styles.bullet}>• Rotate & Companion Plant: Reduce disease, boost plant teamwork.</Text>
+      <Text style={styles.bullet}>• Pest Patrol: Use natural controls and attract beneficial insects.</Text>
+      <Text style={styles.bullet}>• Prune & Harvest: Encourage health and flavor with good timing.</Text>
 
-Water Wisely: Deep, infrequent watering encourages strong roots. Use mulch to retain moisture and reduce weeds.
+      <Text style={styles.subsectionTitle}>Things to Remember 🌼📝</Text>
+      <Text style={styles.paragraph}>• Gardening takes patience — don’t fear a few failures.</Text>
+      <Text style={styles.paragraph}>• Keep a journal. Each season teaches something new.</Text>
+      <Text style={styles.paragraph}>• Connect with your local gardening community for support.</Text>
+      <Text style={styles.paragraph}>• Enjoy the journey. Growth happens both above and below ground!</Text>
 
-Feed & Feed Often: Use balanced fertilizers and organic compost to keep plants nourished. Overfeeding can harm, so follow guidelines!
+      <Text style={styles.subsectionTitle}>Quick Hints & Tips ⚡🌿</Text>
+      <Text style={styles.bullet}>• Start small — a few pots are perfect to begin learning.</Text>
+      <Text style={styles.bullet}>• Use containers or raised beds in poor soil areas.</Text>
+      <Text style={styles.bullet}>• Clean up plant debris and rotate crops seasonally.</Text>
+      <Text style={styles.bullet}>• Mulch is your low-effort best friend.</Text>
+      <Text style={styles.bullet}>• Support tall plants with stakes or cages early.</Text>
+      <Text style={styles.bullet}>• Plant flowers to invite pollinators and skip harmful pesticides.</Text>
+      <Text style={styles.bullet}>• Save seeds from your favorite plants!</Text>
 
-Rotate Crops & Plant Companions: Rotate veggies yearly to prevent pests and diseases. Plant companions that support each other naturally.
-
-Pest Patrol: Keep an eye out for pests and diseases. Use natural solutions and encourage beneficial insects like ladybugs and bees.
-
-Prune & Harvest: Regular pruning keeps plants healthy and productive. Harvest at the right time for best flavor and longevity.
-
-Things to Remember 🌼📝
-Gardening is a journey — expect some failures and learn from them.
-
-Patience pays off! Many plants take time to establish before rewarding you with blooms or fruit.
-
-Keep a garden journal to track what works and what doesn’t each season.
-
-Local gardening groups or community gardens are fantastic for advice and support.
-
-Don’t forget to enjoy the process — gardening is as much about connecting with nature as it is about the harvest!
-
-Quick Hints & Tips ⚡🌿
-Start small if you’re new — a few pots or a small patch can teach you a lot.
-
-Use raised beds or containers if soil quality is poor or space is limited.
-
-Rotate crops and clean up plant debris each season to reduce diseases.
-
-Mulch, mulch, mulch! It’s the secret weapon against weeds and moisture loss.
-
-Support tall plants with stakes or cages to keep them healthy and upright.
-
-Attract pollinators with native flowers and avoid pesticides that harm them.
-
-Save seeds from your best plants to grow your own garden favorites next year.
-
-Fun Gardening Joke to End On 🌸😄
-Why did the gardener quit? Because his celery wasn’t high enough! 🥬😂
-
-            </Text>
-        </View>
-
-    )
+      <Text style={styles.joke}>🌸 Gardening Joke: Why did the gardener quit? Because his celery wasn’t high enough! 🥬😂</Text>
+    </ScrollView>
+  );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    paddingVertical: 20,
+    paddingHorizontal: 16,
+    backgroundColor: "#f0fdf4", // soft yellow-beige
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 12,
+    color: "#713f12",
+  },
+  subsectionTitle: {
+    fontSize: 17,
+    fontWeight: "600",
+    marginTop: 20,
+    marginBottom: 6,
+    color: "#854d0e",
+  },
+  paragraph: {
+    fontSize: 15,
+    lineHeight: 22,
+    marginBottom: 8,
+    color: "#374151",
+  },
+  bullet: {
+    fontSize: 15,
+    marginLeft: 10,
+    marginBottom: 6,
+    color: "#3f6212",
+  },
+  joke: {
+    fontStyle: "italic",
+    fontSize: 15,
+    marginTop: 20,
+    color: "#b45309",
+  },
+});
 
 export default HintsCard;
