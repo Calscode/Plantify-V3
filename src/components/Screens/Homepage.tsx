@@ -1,7 +1,11 @@
 import React from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../../App'; // 如果你放喺 App.tsx 就係咁引入
+type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
-const Homepage = ({ navigation }) => {
+
+const Homepage = ({ navigation }: Props) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>🌿 Welcome to Plantify!</Text>

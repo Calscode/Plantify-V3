@@ -15,6 +15,16 @@ import HintsCard from "~/components/Screens/Hintscard";
 import './global.css';
 import {View} from "react-native"
 
+export type RootStackParamList = {
+  Home: undefined;
+  Discovery: undefined;
+  HintsScreen: undefined;
+  VegCard: undefined;
+  PlantsCard: undefined;
+  FruitCard: undefined;
+  HintsCard: undefined;
+};
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -34,9 +44,9 @@ export default function App() {
           <Stack.Screen name="FruitCard" component={FruitCard} />
           <Stack.Screen name="HintsCard" component={HintsCard} />
         </Stack.Navigator>
+              <ButtonBar />
         <StatusBar style="auto" />
       </NavigationContainer>
-              <ButtonBar />
 
     </SafeAreaProvider>
 </View>
