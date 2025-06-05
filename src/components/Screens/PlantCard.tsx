@@ -1,7 +1,7 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
-import { AntDesign } from '@expo/vector-icons'; // for heart icons
+import { AntDesign } from '@expo/vector-icons';
 
 function PlantCard({ plant }) {
   const navigation = useNavigation();
@@ -9,7 +9,7 @@ function PlantCard({ plant }) {
 
   const toggleLike = () => {
     setLiked(!liked);
-    // Optionally: send to backend or global store
+  
   };
 
   return (
