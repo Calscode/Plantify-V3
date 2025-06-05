@@ -9,7 +9,6 @@ export default function DiscoveryScreen({ navigation }) {
   useEffect(() => {
     axios.get("https://plantify-backend-n824.onrender.com/api/plants")
       .then((response) => {
-        console.log("Fetched data:", response.data);
         setPlantData(response.data.plants);
       })
       .catch((error) => {

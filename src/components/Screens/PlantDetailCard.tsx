@@ -8,7 +8,7 @@ function PlantDetailScreen({ route }) {
 
   const toggleLike = () => {
     setLiked(!liked);
-    // Optional: sync with global state or backend
+
   };
 
   return (
