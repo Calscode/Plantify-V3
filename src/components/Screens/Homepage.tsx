@@ -53,6 +53,13 @@ const Homepage = ({ navigation }: Props) => {
           />
         </View>
       </View>
+      <View style={styles.buttonWrapper}>
+  <Button
+    title="Gardening Journal 📝"
+    onPress={() => navigation.navigate('Journal')}
+    color="#8BC34A"
+  />
+</View>
     </View>
   );
 };
