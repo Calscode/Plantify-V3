@@ -1,21 +1,13 @@
-// /components/Screens/Homepage.tsx
-
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  Button,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
+import { View, Text, Button, StyleSheet } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../App';
 import PlantOnloadScreen from './PlantOnloadScreen';
+import WeatherBox from '../WeatherBox';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 const Homepage = ({ navigation }: Props) => {
-  // Keep track of which group (0–3) to send to QuizScreen
   const [groupIndex, setGroupIndex] = useState(0);
 
   const handleTakeQuiz = () => {
@@ -27,16 +19,14 @@ const Homepage = ({ navigation }: Props) => {
     <View style={styles.container}>
       <Text style={styles.title}>🌿 Welcome to Plantify!</Text>
 
-      <View style={styles.onloadWrapper}>
+      <View style={styles.topRow}>
         <PlantOnloadScreen />
+        <WeatherBox />
       </View>
 
       <View style={styles.buttonRow}>
         <View style={styles.buttonWrapper}>
-          <Button
-            title="Discover Plants 🌱"
-            onPress={() => navigation.navigate('Discovery')}
-          />
+          <Button title="Discover Plants 🌱" onPress={() => navigation.navigate('Discovery')} />
         </View>
         <View style={styles.buttonWrapper}>
           <Button
@@ -46,20 +36,17 @@ const Homepage = ({ navigation }: Props) => {
           />
         </View>
         <View style={styles.buttonWrapper}>
-          <Button
-            title="Take Quiz 🌿"
-            onPress={handleTakeQuiz}
-            color="#10b981"
-          />
+          <Button title="Take Quiz 🌿" onPress={handleTakeQuiz} color="#10b981" />
         </View>
       </View>
+
       <View style={styles.buttonWrapper}>
-  <Button
-    title="Gardening Journal 📝"
-    onPress={() => navigation.navigate('Journal')}
-    color="#8BC34A"
-  />
-</View>
+        <Button
+          title="Gardening Journal 📝"
+          onPress={() => navigation.navigate('Journal')}
+          color="#8BC34A"
+        />
+      </View>
     </View>
   );
 };
@@ -68,14 +55,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f0fdf4',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     paddingHorizontal: 20,
+    paddingTop: 40,
   },
-  onloadWrapper: {
+  topRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     width: '100%',
-    alignItems: 'center',
-    marginBottom: 40,
+    gap: 20,
+    marginBottom: 30,
+    alignItems: 'flex-start',
   },
   title: {
     fontSize: 24,
@@ -92,6 +83,7 @@ const styles = StyleSheet.create({
   buttonWrapper: {
     flex: 1,
     marginHorizontal: 10,
+    marginBottom: 10,
   },
 });
 
