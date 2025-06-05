@@ -12,6 +12,8 @@ import VegCard from "~/components/Screens/Vegcard";
 import PlantsCard from "~/components/Screens/Plantscard";
 import FruitCard from "~/components/Screens/Fruitscard";
 import HintsCard from "~/components/Screens/Hintscard";
+import QuizScreen from "~/components/Screens/QuizScreen";
+import { SearchScreen } from "~/components/Screens/SearchScreen";
 import './global.css';
 import {View} from "react-native"
 import PlantDetailScreen from "~/components/Screens/PlantDetailCard";
@@ -41,6 +43,8 @@ export default function App() {
         <Header />
       <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Home" component={Homepage} />
+      <Stack.Screen name="QuizScreen" component={QuizScreen} />
+      <Stack.Screen name="SearchScreen" component={SearchScreen} />
       <Stack.Screen name="Discovery" component={DiscoveryScreen} />
       <Stack.Screen name="HintsScreen" component={HintsScreen} />
       <Stack.Screen name="VegCard" component={VegCard} />
