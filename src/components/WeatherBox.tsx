@@ -5,6 +5,8 @@ import axios from "axios";
 const WeatherBox = () => {
   const [weather, setWeather] = useState(null);
   const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
+
 
   useEffect(() => {
     axios.get("https://plantify-backend-n824.onrender.com/api/currentWeather")
@@ -15,6 +17,7 @@ const WeatherBox = () => {
       .catch((err) => {
         console.error("Weather API error:", err);
         setLoading(false);
+        setError(true)
       });
   }, []);
 
@@ -25,6 +28,14 @@ const WeatherBox = () => {
         <Text>Loading weather...</Text>
       </View>
     );
+  }
+
+  if(error){
+    return( <View style={styles.card}>
+      <Text style={{ color: 'red', fontSize: 12 }}>
+        ⚠️ Failed to load weather. 
+      </Text>
+    </View>)
   }
 
   return (

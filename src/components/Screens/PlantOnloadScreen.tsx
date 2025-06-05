@@ -13,6 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 function PlantOnloadScreen() {
   const [plant, setPlant] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError]=useState(false)
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -26,6 +27,7 @@ function PlantOnloadScreen() {
       .catch((err) => {
         console.error("Failed to fetch plants:", err);
         setLoading(false);
+        setError(true)
       });
   }, []);
 
@@ -36,6 +38,15 @@ function PlantOnloadScreen() {
         <Text>🌹🌻🪴 Blooming ... 🐝</Text>
       </View>
     );
+  }
+  if(error){
+    return(
+        <view style={styles.centered}>
+              <Text style={{ color: 'red', fontSize: 12 }}>
+                    🥀 Failed to load Plant. 
+                  </Text>
+        </view>
+    )
   }
 
   return (
