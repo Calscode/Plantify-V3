@@ -1,3 +1,4 @@
+// /components/Screens/QuizScreen.tsx
 import React, { useState, useEffect } from 'react';
 import {
   View,
@@ -6,13 +7,17 @@ import {
   StyleSheet,
   ScrollView,
 } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../../App';
 
+type Props = NativeStackScreenProps<RootStackParamList, 'QuizScreen'>;
 
-
-
-
-
-const questions = [
+const questions: Array<{
+  question_id: number;
+  question: string;
+  answer: string;
+  options: string[];
+}> = [
   {
     question_id: 1,
     question: 'What are the four basic things plants need to grow?',
@@ -38,7 +43,8 @@ const questions = [
   {
     question_id: 3,
     question: "What does 'well-drained soil' mean?",
-    answer: 'Soil that allows water to flow through it without pooling or becoming waterlogged',
+    answer:
+      'Soil that allows water to flow through it without pooling or becoming waterlogged',
     options: [
       'Soil that allows water to flow through it without pooling or becoming waterlogged',
       'Soil that holds water for days',
@@ -82,7 +88,8 @@ const questions = [
   {
     question_id: 7,
     question: 'What is compost and why is it useful in gardening?',
-    answer: 'Compost is decomposed organic matter that improves soil structure and adds nutrients',
+    answer:
+      'Compost is decomposed organic matter that improves soil structure and adds nutrients',
     options: [
       'Compost is decomposed organic matter that improves soil structure and adds nutrients',
       'Compost is a type of fertilizer made from chemicals',
@@ -104,7 +111,8 @@ const questions = [
   {
     question_id: 9,
     question: 'What is mulching and what does it help with?',
-    answer: 'Mulching covers the soil to retain moisture, suppress weeds, and regulate temperature',
+    answer:
+      'Mulching covers the soil to retain moisture, suppress weeds, and regulate temperature',
     options: [
       'Mulching covers the soil to retain moisture, suppress weeds, and regulate temperature',
       'Mulching removes nutrients from the soil',
@@ -115,7 +123,8 @@ const questions = [
   {
     question_id: 10,
     question: 'How can you prevent overwatering your plants?',
-    answer: 'Check soil moisture before watering; water only when the top inch feels dry',
+    answer:
+      'Check soil moisture before watering; water only when the top inch feels dry',
     options: [
       'Check soil moisture before watering; water only when the top inch feels dry',
       'Water plants every morning without checking soil',
@@ -165,7 +174,8 @@ const questions = [
   {
     question_id: 15,
     question: 'When is the best time to water plants during the day?',
-    answer: 'Early in the morning, to reduce evaporation and prevent fungal diseases',
+    answer:
+      'Early in the morning, to reduce evaporation and prevent fungal diseases',
     options: [
       'Early in the morning, to reduce evaporation and prevent fungal diseases',
       "At midday when it's hottest",
@@ -176,7 +186,8 @@ const questions = [
   {
     question_id: 16,
     question: 'How can you naturally deter pests in your garden?',
-    answer: 'By encouraging beneficial insects, using neem oil, or planting pest-repellent herbs',
+    answer:
+      'By encouraging beneficial insects, using neem oil, or planting pest-repellent herbs',
     options: [
       'By encouraging beneficial insects, using neem oil, or planting pest-repellent herbs',
       'By spraying chemical pesticides daily',
@@ -209,7 +220,8 @@ const questions = [
   {
     question_id: 19,
     question: 'How can you tell if a plant is root-bound?',
-    answer: 'Roots are tightly packed and circling the pot, often visible through drainage holes',
+    answer:
+      'Roots are tightly packed and circling the pot, often visible through drainage holes',
     options: [
       'Roots are tightly packed and circling the pot, often visible through drainage holes',
       'Leaves are turning yellow',
@@ -220,7 +232,8 @@ const questions = [
   {
     question_id: 20,
     question: 'What should you consider before planting a garden?',
-    answer: 'Sunlight, soil type, drainage, climate, space, and what plants you want to grow',
+    answer:
+      'Sunlight, soil type, drainage, climate, space, and what plants you want to grow',
     options: [
       'Sunlight, soil type, drainage, climate, space, and what plants you want to grow',
       'Only the color of the flowers',
@@ -230,33 +243,68 @@ const questions = [
   },
 ];
 
-function shuffleArray(array) {
+function shuffleArray<T>(array: T[]): T[] {
   return array
     .map((item) => ({ sort: Math.random(), value: item }))
     .sort((a, b) => a.sort - b.sort)
     .map((a) => a.value);
 }
 
-export default function QuizScreen() {
-  const [shuffledQuestions, setShuffledQuestions] = useState([]);
+export default function QuizScreen({ route, navigation }: Props) {
+  // read groupIndex from route params
+  const { groupIndex } = route.params as { groupIndex: number };
+
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [score, setScore] = useState(0);
   const [showFeedback, setShowFeedback] = useState(false);
 
+  // We only need to shuffle once per mount of QuizScreen.
+  // And partition into four groups of five.
+  const [groupedQuestions, setGroupedQuestions] = useState<string[][]>([]);
   useEffect(() => {
-    const randomizedQuestions = shuffleArray(questions).map((q) => ({
-      ...q,
-      options: shuffleArray(q.options),
-    }));
-    setShuffledQuestions(randomizedQuestions);
+    const shuffled = shuffleArray(questions);
+    const groups: Array<typeof questions> = [];
+    for (let i = 0; i < shuffled.length; i += 5) {
+      // Slice out five items and also shuffle each question's options
+      const chunk = shuffled.slice(i, i + 5).map((q) => ({
+        ...q,
+        options: shuffleArray(q.options),
+      }));
+      groups.push(chunk);
+    }
+    setGroupedQuestions(groups);
   }, []);
 
-  if (shuffledQuestions.length === 0) return null;
+  // If groupedQuestions is not ready yet, render nothing
+  if (groupedQuestions.length === 0) return null;
 
-  const currentQuestion = shuffledQuestions[currentIndex];
+  // Grab the one group that this screen should show:
+  const currentGroup = groupedQuestions[groupIndex] || [];
+  const currentQuestion = currentGroup[currentIndex];
 
-  function handleOptionClick(option) {
+  // If currentIndex goes past this group, we show the “completed round” screen
+  if (!currentQuestion) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.header}>Round {groupIndex + 1} Completed!</Text>
+        <Text style={styles.score}>
+          You scored {score} out of {currentGroup.length}
+        </Text>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            // When the user taps “Back to Home,” pop back and user can press “Take Quiz” again
+            navigation.goBack();
+          }}
+        >
+          <Text style={styles.buttonText}>Back to Home</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
+  function handleOptionClick(option: string) {
     if (showFeedback) return;
     setSelectedOption(option);
     setShowFeedback(true);
@@ -266,51 +314,26 @@ export default function QuizScreen() {
   }
 
   function handleNext() {
-    if (currentIndex < shuffledQuestions.length - 1) {
+    if (currentIndex < currentGroup.length - 1) {
       setCurrentIndex((prev) => prev + 1);
-      setSelectedOption(null);
-      setShowFeedback(false);
     } else {
-      setCurrentIndex(shuffledQuestions.length);
+      // If we finished all 5 questions in this group, clear selected and feedback,
+      // and stepping currentIndex to an invalid index causes render of round-completed.
+      setCurrentIndex(currentGroup.length);
     }
-  }
-
-  function restartQuiz() {
-    const randomizedQuestions = shuffleArray(questions).map((q) => ({
-      ...q,
-      options: shuffleArray(q.options),
-    }));
-    setShuffledQuestions(randomizedQuestions);
-    setCurrentIndex(0);
-    setScore(0);
     setSelectedOption(null);
     setShowFeedback(false);
-  }
-
-  if (currentIndex >= shuffledQuestions.length) {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.header}>Quiz Completed!</Text>
-        <Text style={styles.score}>
-          Your score: {score} out of {shuffledQuestions.length}
-        </Text>
-        <TouchableOpacity onPress={restartQuiz} style={styles.button}>
-          <Text style={styles.buttonText}>Restart Quiz</Text>
-        </TouchableOpacity>
-      </View>
-    );
   }
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.questionCounter}>
-        Question {currentIndex + 1} of {shuffledQuestions.length}
+        Round {groupIndex + 1} / 4 – Question {currentIndex + 1} of {currentGroup.length}
       </Text>
       <Text style={styles.questionText}>{currentQuestion.question}</Text>
 
       {currentQuestion.options.map((option, idx) => {
         let optionStyle = [styles.optionButton];
-
         if (showFeedback) {
           if (option === currentQuestion.answer) {
             optionStyle.push(styles.correctOption);
@@ -349,6 +372,7 @@ const styles = StyleSheet.create({
     padding: 20,
     alignItems: 'stretch',
     justifyContent: 'center',
+    flexGrow: 1,
   },
   header: {
     fontSize: 24,
@@ -359,11 +383,13 @@ const styles = StyleSheet.create({
   questionCounter: {
     fontSize: 16,
     marginBottom: 8,
+    textAlign: 'center',
   },
   questionText: {
     fontSize: 18,
     fontWeight: '600',
     marginBottom: 16,
+    textAlign: 'center',
   },
   optionButton: {
     backgroundColor: '#fff',
@@ -375,6 +401,7 @@ const styles = StyleSheet.create({
   },
   optionText: {
     fontSize: 16,
+    textAlign: 'center',
   },
   selectedOption: {
     backgroundColor: '#bbdefb',
@@ -396,6 +423,8 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     marginTop: 20,
     alignItems: 'center',
+    alignSelf: 'center',
+    width: '50%',
   },
   buttonText: {
     color: '#fff',
