@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -33,7 +33,7 @@ function PlantOnloadScreen() {
     return (
       <View style={styles.centered}>
         <ActivityIndicator size="large" color="#4CAF50" />
-        <Text>Loading...🪴</Text>
+        <Text>🌹🌻🪴 Blooming ... 🐝</Text>
       </View>
     );
   }

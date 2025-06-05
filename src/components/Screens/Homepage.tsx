@@ -3,6 +3,7 @@ import { View, Text, Button, StyleSheet } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../App'; 
 import PlantOnloadScreen from "./PlantOnloadScreen"; 
+import WeatherBox from "../WeatherBox"
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 const Homepage = ({ navigation }: Props) => {
@@ -12,6 +13,9 @@ const Homepage = ({ navigation }: Props) => {
       <View style={styles.onloadWrapper}>
         <PlantOnloadScreen />
       </View>
+      <View style={stlyes.weatherBoxWrapper}>
+  <WeatherBox />
+</View>
       <View style={styles.buttonRow}>
         <View style={styles.buttonWrapper}>
           <Button title="Discover Plants 🌱" onPress={() => navigation.navigate('Discovery')} />
@@ -45,6 +49,9 @@ const styles = StyleSheet.create({
     marginBottom: 40,
     width: "100%",
     alignItems: "center",
+  },
+  weatherBoxWrapper:{
+
   },
   title: {
     fontSize: 24,
