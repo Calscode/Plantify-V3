@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../../App'; // 如果你放喺 App.tsx 就係咁引入
+import { RootStackParamList } from '../../../App'; 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 
