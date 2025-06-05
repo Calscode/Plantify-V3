@@ -14,6 +14,7 @@ import FruitCard from "~/components/Screens/Fruitscard";
 import HintsCard from "~/components/Screens/Hintscard";
 import './global.css';
 import {View} from "react-native"
+import PlantDetailScreen from "~/components/Screens/PlantDetailCard";
 
 export type RootStackParamList = {
   Home: undefined;
@@ -23,6 +24,7 @@ export type RootStackParamList = {
   PlantsCard: undefined;
   FruitCard: undefined;
   HintsCard: undefined;
+  PlantDetail: { plant: any };
 };
 
 const Stack = createNativeStackNavigator();
@@ -43,6 +45,7 @@ export default function App() {
           <Stack.Screen name="PlantsCard" component={PlantsCard} />
           <Stack.Screen name="FruitCard" component={FruitCard} />
           <Stack.Screen name="HintsCard" component={HintsCard} />
+          <Stack.Screen name="PlantDetail" component={PlantDetailScreen} />
         </Stack.Navigator>
               <ButtonBar />
         <StatusBar style="auto" />
