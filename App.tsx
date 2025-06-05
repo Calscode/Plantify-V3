@@ -18,6 +18,7 @@ import './global.css';
 import {View} from "react-native"
 import PlantDetailScreen from "~/components/Screens/PlantDetailCard";
 import ProfileScreen from '~/components/Screens/Profilescreen';
+import GardeningJournal from "~/components/Screens/DiaryScreen";
 
 export type RootStackParamList = {
   Home: undefined;
@@ -29,6 +30,7 @@ export type RootStackParamList = {
   HintsCard: undefined;
   PlantDetail: { plant: any };
   Profile: undefined; 
+  Journal: undefined;
 };
 
 const Stack = createNativeStackNavigator();
@@ -53,6 +55,7 @@ export default function App() {
       <Stack.Screen name="HintsCard" component={HintsCard} />
       <Stack.Screen name="PlantDetail" component={PlantDetailScreen} />
       <Stack.Screen name="Profile" component={ProfileScreen} />
+      <Stack.Screen name="Journal" component={GardeningJournal} />
         </Stack.Navigator>
               <ButtonBar />
         <StatusBar style="auto" />
