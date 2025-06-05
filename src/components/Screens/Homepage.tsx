@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../App'; 
+import PlantOnloadScreen from "./PlantOnloadScreen"; 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 
@@ -9,6 +10,9 @@ const Homepage = ({ navigation }: Props) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>🌿 Welcome to Plantify!</Text>
+       <View style={{ marginBottom: 30, width: '100%' }}>
+        <PlantOnloadScreen />
+      </View>
       <View style={styles.buttonRow}>
         <View style={styles.buttonWrapper}>
           <Button
