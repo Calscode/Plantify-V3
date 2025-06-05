@@ -10,7 +10,7 @@ const Homepage = ({ navigation }: Props) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>🌿 Welcome to Plantify!</Text>
-       <View style={{ marginBottom: 30, width: '100%' }}>
+      <View style={styles.onloadWrapper}>
         <PlantOnloadScreen />
       </View>
       <View style={styles.buttonRow}>
@@ -39,6 +39,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#f0fdf4",
     paddingHorizontal: 20,
+  },
+   onloadWrapper: {
+    marginBottom: 40,
+    width: "100%",
+    alignItems: "center",
   },
   title: {
     fontSize: 24,

@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Image, TouchableOpacity, ActivityIndicator } from "react-native";
+import {
+  View,
+  Text,
+  ImageBackground,
+  TouchableOpacity,
+  ActivityIndicator,
+  StyleSheet,
+} from "react-native";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 
@@ -24,7 +31,7 @@ function PlantOnloadScreen() {
 
   if (loading) {
     return (
-      <View className="flex-1 justify-center items-center bg-white">
+      <View style={styles.centered}>
         <ActivityIndicator size="large" color="#4CAF50" />
         <Text>Loading...🪴</Text>
       </View>
@@ -33,18 +40,51 @@ function PlantOnloadScreen() {
 
   return (
     <TouchableOpacity
-      className="flex-1 justify-center items-center bg-white"
+      style={styles.card}
       onPress={() => navigation.navigate("PlantDetail", { plant })}
     >
-      <Image
+      <ImageBackground
         source={{ uri: plant.img_url }}
-        className="w-full h-96"
-        resizeMode="cover"
-      />
-      <Text className="text-xl font-bold mt-4">{plant.name}</Text>
-      <Text className="text-gray-500">Tap to see more</Text>
+        style={styles.image}
+        imageStyle={{ borderRadius: 16 }}
+      >
+        <View style={styles.overlay}>
+          <Text style={styles.title}>{plant.name}</Text>
+        </View>
+      </ImageBackground>
     </TouchableOpacity>
   );
 }
+
+const styles = StyleSheet.create({
+  centered: {
+    alignItems: "center",
+    justifyContent: "center",
+    height: 200,
+  },
+  card: {
+    width: 180,
+    height: 240,
+    borderRadius: 16,
+    overflow: "hidden",
+    elevation: 3,
+  },
+  image: {
+    flex: 1,
+    justifyContent: "flex-end",
+  },
+  overlay: {
+    backgroundColor: "rgba(0, 0, 0, 0.4)",
+  paddingVertical: 6,
+    alignItems: "center",
+    borderBottomLeftRadius: 16,
+    borderBottomRightRadius: 16,
+  },
+  title: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+});
 
 export default PlantOnloadScreen;
