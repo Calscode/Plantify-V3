@@ -4,14 +4,17 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../App';
+import { useUser } from '../UserContext';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
 
 const LoginScreen = ({ navigation }: Props) => {
-  const [username, setUsername] = useState('');
+  const [username, setLocalUsername] = useState('');
+  const { setUsername } = useUser();
 
   const handleContinue = () => {
-    navigation.replace('Home', { username: username.trim() });
+    setUsername(username.trim()); // Save to context
+    navigation.replace('Home');
   };
 
   const handleGuest = () => {
@@ -25,16 +28,17 @@ const LoginScreen = ({ navigation }: Props) => {
         style={styles.input}
         placeholder="Enter a username"
         value={username}
-        onChangeText={setUsername}
+        onChangeText={setLocalUsername}
       />
       <TouchableOpacity
         style={[styles.button, { backgroundColor: '#10b981' }]}
         disabled={!username.trim()}
-        onPress={handleContinue}
-      >
+        onPress={handleContinue}>
         <Text style={styles.buttonText}>Continue</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={[styles.button, { backgroundColor: '#6b7280' }]} onPress={handleGuest}>
+      <TouchableOpacity
+        style={[styles.button, { backgroundColor: '#6b7280' }]}
+        onPress={handleGuest}>
         <Text style={styles.buttonText}>Sign in as Guest</Text>
       </TouchableOpacity>
     </View>

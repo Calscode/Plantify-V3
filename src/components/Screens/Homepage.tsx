@@ -5,10 +5,13 @@ import { RootStackParamList } from '../../../App';
 import PlantOnloadScreen from './PlantOnloadScreen';
 import WeatherBox from '../WeatherBox';
 import QuizButton from '../QuizButton';
+import { useUser } from '../UserContext';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
-const Homepage = ({ navigation }: Props) => {
+const Homepage = ({ navigation, route }: Props) => {
+const { username } = useUser(); 
+
   const [groupIndex, setGroupIndex] = useState(0);
 
   const handleTakeQuiz = () => {
@@ -18,15 +21,15 @@ const Homepage = ({ navigation }: Props) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>🌿 Welcome to Plantify!</Text>
+      <Text style={styles.title}>🌿 Welcome to Plantify, {username}!</Text>
 
-     <View style={styles.topRow}>
-  <PlantOnloadScreen />
-  <View style={styles.rightColumn}>
-    <WeatherBox />
-    <QuizButton onPress={handleTakeQuiz} />
-  </View>
-</View>
+      <View style={styles.topRow}>
+        <PlantOnloadScreen />
+        <View style={styles.rightColumn}>
+          <WeatherBox />
+          <QuizButton onPress={handleTakeQuiz} />
+        </View>
+      </View>
 
       <View style={styles.buttonRow}>
         <View style={styles.buttonWrapper}>
@@ -39,9 +42,6 @@ const Homepage = ({ navigation }: Props) => {
             color="#4CAF50"
           />
         </View>
-        {/* <View style={styles.buttonWrapper}>
-          <Button title="Take Quiz 🌿" onPress={handleTakeQuiz} color="#10b981" />
-        </View> */}
       </View>
 
       <View style={styles.buttonWrapper}>
@@ -64,11 +64,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 40,
   },
-    rightColumn: {
-     flex: 1,
-  justifyContent: 'space-between',
-  alignItems: 'flex-end',
-  height: 200, 
+  title: {
+    fontSize: 24,
+    marginBottom: 30,
+    color: '#14532d',
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   topRow: {
     flexDirection: 'row',
@@ -78,12 +79,11 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     alignItems: 'flex-start',
   },
-  title: {
-    fontSize: 24,
-    marginBottom: 30,
-    color: '#14532d',
-    fontWeight: 'bold',
-    textAlign: 'center',
+  rightColumn: {
+    flex: 1,
+    justifyContent: 'space-between',
+    alignItems: 'flex-end',
+    height: 200,
   },
   buttonRow: {
     flexDirection: 'row',
