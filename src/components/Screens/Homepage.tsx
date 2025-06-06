@@ -4,6 +4,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../App';
 import PlantOnloadScreen from './PlantOnloadScreen';
 import WeatherBox from '../WeatherBox';
+import QuizButton from '../QuizButton';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
@@ -19,10 +20,13 @@ const Homepage = ({ navigation }: Props) => {
     <View style={styles.container}>
       <Text style={styles.title}>🌿 Welcome to Plantify!</Text>
 
-      <View style={styles.topRow}>
-        <PlantOnloadScreen />
-        <WeatherBox />
-      </View>
+     <View style={styles.topRow}>
+  <PlantOnloadScreen />
+  <View style={styles.rightColumn}>
+    <WeatherBox />
+    <QuizButton onPress={handleTakeQuiz} />
+  </View>
+</View>
 
       <View style={styles.buttonRow}>
         <View style={styles.buttonWrapper}>
@@ -35,9 +39,9 @@ const Homepage = ({ navigation }: Props) => {
             color="#4CAF50"
           />
         </View>
-        <View style={styles.buttonWrapper}>
+        {/* <View style={styles.buttonWrapper}>
           <Button title="Take Quiz 🌿" onPress={handleTakeQuiz} color="#10b981" />
-        </View>
+        </View> */}
       </View>
 
       <View style={styles.buttonWrapper}>
@@ -59,6 +63,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingTop: 40,
+  },
+    rightColumn: {
+     flex: 1,
+  justifyContent: 'space-between',
+  alignItems: 'flex-end',
+  height: 200, 
   },
   topRow: {
     flexDirection: 'row',
