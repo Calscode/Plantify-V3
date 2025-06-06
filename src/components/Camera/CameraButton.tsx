@@ -1,6 +1,7 @@
 import { TouchableOpacity, Text } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import uploadPhoto from './CameraUtils';
+import { Ionicons } from '@expo/vector-icons';
 
 export const CameraButton = () => {
   const takePhoto = () => {
@@ -28,8 +29,8 @@ export const CameraButton = () => {
   };
 
   return (
-    <TouchableOpacity onPress={takePhoto} className="bg-green-500 p-4 rounded">
-      <Text className="text-white text-center">Take Photo</Text>
-    </TouchableOpacity>
+<TouchableOpacity onPress={takePhoto}>
+  <Ionicons name="camera-outline" size={28} color="#4B5563" />
+</TouchableOpacity>
   );
 };

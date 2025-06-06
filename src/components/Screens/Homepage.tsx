@@ -6,12 +6,12 @@ import PlantOnloadScreen from './PlantOnloadScreen';
 import WeatherBox from '../WeatherBox';
 import QuizButton from '../QuizButton';
 import { useUser } from '../UserContext';
-
+import { TouchableOpacity } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
-const Homepage = ({ navigation, route }: Props) => {
-const { username } = useUser(); 
-
+const Homepage = ({ navigation }: Props) => {
+  const { username } = useUser();
   const [groupIndex, setGroupIndex] = useState(0);
 
   const handleTakeQuiz = () => {
@@ -20,53 +20,63 @@ const { username } = useUser();
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>🌿 Welcome to Plantify, {username}!</Text>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.content}>
+        <Text style={styles.title}>🌿 Welcome to Plantify, {username}!</Text>
 
-      <View style={styles.topRow}>
-        <PlantOnloadScreen />
-        <View style={styles.rightColumn}>
-          <WeatherBox />
-          <QuizButton onPress={handleTakeQuiz} />
-        </View>
-      </View>
+        <View style={styles.topRow}>
+          <View style={styles.leftBox}>
+            <PlantOnloadScreen />
+          </View>
 
-      <View style={styles.buttonRow}>
-        <View style={styles.buttonWrapper}>
-          <Button title="Discover Plants 🌱" onPress={() => navigation.navigate('Discovery')} />
+          <View style={styles.rightColumn}>
+            <WeatherBox />
+            <QuizButton onPress={handleTakeQuiz} />
+          </View>
         </View>
-        <View style={styles.buttonWrapper}>
-          <Button
-            title="Hints & Tips"
-            onPress={() => navigation.navigate('HintsScreen')}
-            color="#4CAF50"
-          />
-        </View>
-      </View>
 
-      <View style={styles.buttonWrapper}>
-        <Button
-          title="Gardening Journal 📝"
-          onPress={() => navigation.navigate('Journal')}
-          color="#8BC34A"
-        />
+        <View style={styles.buttonGrid}>
+          <TouchableOpacity style={styles.squareButton} onPress={() => navigation.navigate('Discovery')}>
+            <Text style={styles.buttonText}>Discover Plants 🌱</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.squareButton} onPress={() => navigation.navigate('HintsScreen')}>
+            <Text style={styles.buttonText}>Hints & Tips</Text>
+          </TouchableOpacity>
+        </View>
+
+        <TouchableOpacity style={styles.fullWidthButton} onPress={() => navigation.navigate('Journal')}>
+          <Text style={styles.buttonText}>Gardening Journal 📝</Text>
+        </TouchableOpacity>
+
+        <View style={styles.bottomSpacer} />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f0fdf4',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+ safeArea: {
+  flex: 1,
+  backgroundColor: '#f0fdf4',
+},
+content: {
+  flex: 1,
+  paddingHorizontal: 20,
+  paddingTop: 20,
+  paddingBottom: 20, // So it doesn't clash with bottom bar
+  justifyContent: 'space-between',
+  alignItems: 'center',
+},
+  scroll: {
     paddingHorizontal: 20,
-    paddingTop: 40,
+    paddingTop: 20,
+    paddingBottom: 100, // Make room for bottom bar + photo button
+    alignItems: 'center',
   },
   title: {
     fontSize: 24,
-    marginBottom: 30,
+    marginBottom: 20,
     color: '#14532d',
     fontWeight: 'bold',
     textAlign: 'center',
@@ -75,25 +85,51 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
-    gap: 20,
-    marginBottom: 30,
-    alignItems: 'flex-start',
+    gap: 16,
+    marginBottom: 20,
+  },
+  leftBox: {
+    flex: 1,
+    backgroundColor: '#d1fae5',
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'hidden',
   },
   rightColumn: {
     flex: 1,
     justifyContent: 'space-between',
-    alignItems: 'flex-end',
-    height: 200,
+    gap: 12,
   },
-  buttonRow: {
+  buttonGrid: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
+    marginBottom: 12,
   },
-  buttonWrapper: {
+  squareButton: {
     flex: 1,
-    marginHorizontal: 10,
-    marginBottom: 10,
+    backgroundColor: '#bbf7d0',
+    marginHorizontal: 5,
+    padding: 16,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  fullWidthButton: {
+    width: '100%',
+    backgroundColor: '#a7f3d0',
+    padding: 16,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#065f46',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  bottomSpacer: {
+    height: 20,
   },
 });
 
