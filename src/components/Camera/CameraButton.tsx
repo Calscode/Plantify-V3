@@ -13,13 +13,11 @@ export const CameraButton = () => {
     })
       .then((result) => {
         if (!result.canceled) {
-          const photo = result.assets[0];
-          console.log(result)
+          const photo:any = result.assets[0];
 
           photo.fileName = photo.fileName || 'photo.jpg';
           photo.mimeType = photo.mimeType || 'image/jpeg';
 
-          console.log('Captured photo asset:', photo); 
           uploadPhoto(photo);
         }
       })

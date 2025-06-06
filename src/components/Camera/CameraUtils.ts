@@ -6,6 +6,7 @@ const uploadPhoto = (photo: {
   mimeType?: string;
 }) => {
   const formData = new FormData();
+
   formData.append('image', {
     uri: photo.uri,
     name: photo.fileName || 'photo.jpg',
@@ -13,16 +14,16 @@ const uploadPhoto = (photo: {
   } as any);
 
   axios
-    .post('https://your-backend.com/api/upload', formData, {
+    .post('https://plantify-backend-n824.onrender.com/api/plant', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     })
     .then((response) => {
-      console.log('API response:', response.data);
+      console.log('API response:', response.data.plantData);
     })
     .catch((error) => {
-      console.error('Upload failed:', error);
+      console.error('Upload failed:', error.message);
     });
 };
 
