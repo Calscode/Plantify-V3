@@ -21,6 +21,7 @@ import PlantDetailScreen from '~/components/Screens/PlantDetailCard';
 import ProfileScreen from '~/components/Screens/Profilescreen';
 import GardeningJournal from '~/components/Screens/DiaryScreen';
 import { UserProvider } from '~/components/UserContext';
+import PhotoIdentifierWrapper from '~/components/Camera/PhotoIdentifierWrapper';
 
 export type RootStackParamList = {
   Login: undefined;
@@ -36,6 +37,7 @@ export type RootStackParamList = {
   Journal: undefined;
   QuizScreen: undefined;
   SearchScreen: undefined;
+  PhotoIdentifier: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -69,6 +71,7 @@ export default function App() {
               <Stack.Screen name="PlantDetail" component={PlantDetailScreen} />
               <Stack.Screen name="Profile" component={ProfileScreen} />
               <Stack.Screen name="Journal" component={GardeningJournal} />
+              <Stack.Screen name="PhotoIdentifier" component={PhotoIdentifierWrapper} options={{ title: 'Identify Plant' }} />
             </Stack.Navigator>
 
             {currentRoute !== 'Login' && <ButtonBar />}

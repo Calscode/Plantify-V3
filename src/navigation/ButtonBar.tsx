@@ -24,7 +24,9 @@ export const ButtonBar = () => {
         <TouchableOpacity onPress={() => navigation.navigate('SearchScreen')}>
           <Ionicons name="search-outline" size={28} color="#4B5563" />
         </TouchableOpacity>
-        <CameraButton />
+        <TouchableOpacity onPress={() => navigation.navigate('PhotoIdentifier')}>
+  <Ionicons name="camera-outline" size={28} color="#4B5563" />
+        </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('Profile', { username })}>
           <Ionicons name="person-outline" size={28} color="#4B5563" />
         </TouchableOpacity>
