@@ -1,27 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, FlatList, Text, Image } from 'react-native';
+import { View, TextInput, FlatList, Text, Image, TouchableOpacity } from 'react-native';
 import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 
 export const SearchScreen = () => {
   const [query, setQuery] = useState('');
   const [allPlants, setAllPlants] = useState([]);
   const [filteredPlants, setFilteredPlants] = useState([]);
 
+  const navigation = useNavigation(); // ✅ Get navigation object
+
   useEffect(() => {
     axios
       .get('https://plantify-backend-n824.onrender.com/api/plants')
       .then((response) => {
-        console.log('API raw response:', response.data); // Debug
-
         let plants = [];
 
-        // Defensive handling of multiple possible response shapes
         if (Array.isArray(response.data)) {
           plants = response.data;
         } else if (Array.isArray(response.data.plants)) {
           plants = response.data.plants;
-        } else {
-          console.warn('Unexpected API response shape:', response.data);
         }
 
         setAllPlants(plants);
@@ -37,17 +35,15 @@ export const SearchScreen = () => {
   const handleSearch = (text) => {
     setQuery(text);
 
-    if (!Array.isArray(allPlants)) {
-      console.warn('allPlants is not an array:', allPlants);
-      setFilteredPlants([]);
-      return;
-    }
-
     const filtered = allPlants.filter((plant) =>
       plant?.name?.toLowerCase?.().includes(text.toLowerCase())
     );
 
     setFilteredPlants(filtered);
+  };
+
+  const handlePress = (plant) => {
+    navigation.navigate('PlantDetail', { plant }); // ✅ Navigate to detail
   };
 
   return (
@@ -63,15 +59,17 @@ export const SearchScreen = () => {
         data={filteredPlants}
         keyExtractor={(item, index) => item.id?.toString() ?? index.toString()}
         renderItem={({ item }) => (
-          <View className="flex-row items-center space-x-3 border-b border-gray-200 p-2">
-            {item.img_url && (
-              <Image
-                source={{ uri: item.img_url }}
-                style={{ width: 50, height: 50, borderRadius: 8 }}
-              />
-            )}
-            <Text className="text-lg">{item.name}</Text>
-          </View>
+          <TouchableOpacity onPress={() => handlePress(item)}>
+            <View className="flex-row items-center space-x-3 border-b border-gray-200 p-2">
+              {item.img_url && (
+                <Image
+                  source={{ uri: item.img_url }}
+                  style={{ width: 50, height: 50, borderRadius: 8 }}
+                />
+              )}
+              <Text className="text-lg">{item.name}</Text>
+            </View>
+          </TouchableOpacity>
         )}
       />
     </View>
