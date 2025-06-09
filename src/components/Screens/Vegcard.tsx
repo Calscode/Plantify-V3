@@ -18,7 +18,7 @@ function VegCard() {
 
       <Text style={styles.sectionTitle}>3. Soil, Spacing & Roots 🌱🪴</Text>
       <Text style={styles.paragraph}>
-        Roots run the show underground! Deep-rooted veggies like 🥕 carrots and parsnips need loose, deep soil...
+        Roots run the show underground! Deep-rooted veggies like 🥕 carrots and parsnips need loose, dzeep soil...
       </Text>
 
       <Text style={styles.sectionTitle}>4. Watering & Feeding 💧🥄</Text>

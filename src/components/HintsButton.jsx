@@ -1,30 +1,40 @@
 import React from "react";
-import { TouchableOpacity, Text, StyleSheet } from "react-native";
+import { TouchableOpacity, Text, StyleSheet, Dimensions, ImageBackground, View } from "react-native";
 
-const HintsButton = ({ title, onPress }) => (
-  <TouchableOpacity style={styles.button} onPress={onPress} activeOpacity={0.7}>
-    <Text style={styles.text}>{title}</Text>
+// This will be passed from the parent now, so it's dynamic and safe
+const HintsButton = ({ title, onPress, image, height }) => (
+  <TouchableOpacity onPress={onPress} activeOpacity={0.9}>
+    <ImageBackground
+      source={image}
+      style={[styles.imageBackground, { height }]}
+      imageStyle={styles.imageStyle}
+    >
+      <View style={styles.overlay}>
+        <Text style={styles.text}>{title}</Text>
+      </View>
+    </ImageBackground>
   </TouchableOpacity>
 );
 
 const styles = StyleSheet.create({
-  button: {
-    backgroundColor: "#4CAF50",
-    paddingVertical: 15,
-    paddingHorizontal: 40,
-    borderRadius: 12,
-    width: 250,
+  imageBackground: {
+    width: "100%",
+    justifyContent: "center",
     alignItems: "center",
-    shadowColor: "#000",
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 3,
-    marginVertical: 10,
+  },
+  imageStyle: {
+    resizeMode: "cover",
+  },
+  overlay: {
+    backgroundColor: "rgba(0, 0, 0, 0.4)",
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 10,
   },
   text: {
     color: "white",
     fontWeight: "bold",
-    fontSize: 16,
+    fontSize: 24,
   },
 });
 
