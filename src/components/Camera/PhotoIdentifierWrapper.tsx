@@ -8,8 +8,8 @@ import {
   Image,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import PlantIdentifier from './PlantIdentifier';
 import uploadPhoto from './CameraUtils';
+import PlantIdentifier from './PlantIdentifier';
 import { CameraButton } from './CameraButton';
 
 const backgroundImage = require('../../assets/presstoidentify.jpeg');
@@ -57,6 +57,13 @@ const PhotoIdentifierWrapper = () => {
         </View>
         {loading && <ActivityIndicator size="large" color="#fff" style={styles.loader} />}
         {error && <Text style={styles.error}>{error}</Text>}
+
+        {plantData && (
+    <PlantIdentifier
+    apiResponse={plantData}
+    onPlantMatched={handlePlantMatched}
+  />
+)}
       </View>
     </ImageBackground>
   );
@@ -87,11 +94,11 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 5,
-    elevation: 8, // Android shadow
+    elevation: 8, 
   },
   cameraButtonWrapper: {
-  backgroundColor: '#fff', // white circle
-  borderRadius: 50,        // make it fully circular (assuming width=height=100)
+  backgroundColor: '#fff', 
+  borderRadius: 50,       
   width: 100,
   height: 100,
   justifyContent: 'center',
@@ -100,7 +107,7 @@ const styles = StyleSheet.create({
   shadowOffset: { width: 0, height: 4 },
   shadowOpacity: 0.3,
   shadowRadius: 5,
-  elevation: 8, // for Android shadow
+  elevation: 8, 
 },
   promptRow: {
     flexDirection: 'row',
@@ -111,7 +118,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 26,
     fontWeight: '700',
-    // Universal font families — no platform checks
+   
     fontFamily: 'System',
     letterSpacing: 1,
     textShadowColor: 'rgba(0,0,0,0.3)',
