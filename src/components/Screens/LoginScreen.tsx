@@ -13,13 +13,14 @@ const LoginScreen = ({ navigation }: Props) => {
   const { setUsername } = useUser();
 
   const handleContinue = () => {
-    setUsername(username.trim()); // Save to context
+    setUsername(username.trim()); 
     navigation.replace('Home');
   };
 
-  const handleGuest = () => {
-    navigation.replace('Home', { username: 'Guest' });
-  };
+ const handleGuest = () => {
+  setUsername('Guest'); 
+  navigation.replace('Home');
+};
 
   return (
     <View style={styles.container}>
