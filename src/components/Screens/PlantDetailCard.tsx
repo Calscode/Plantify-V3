@@ -1,15 +1,14 @@
-import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
-import { useState } from "react";
-import { AntDesign } from "@expo/vector-icons";
+import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { useState } from 'react';
+import { AntDesign } from '@expo/vector-icons';
 
 function PlantDetailScreen({ route }) {
     console.log("🚨 PlantDetailScreen route.params:", route.params);
-  const plant = route.params?.plant;
+  const plant = route.params?.plant?.;
   const [liked, setLiked] = useState(false);
 
   const toggleLike = () => {
     setLiked(!liked);
-
   };
 
   return (
@@ -17,16 +16,12 @@ function PlantDetailScreen({ route }) {
       <View style={styles.imageWrapper}>
         <Image source={{ uri: plant.img_url }} style={styles.image} />
         <TouchableOpacity style={styles.heart} onPress={toggleLike}>
-          <AntDesign
-            name={liked ? "heart" : "hearto"}
-            size={28}
-            color={liked ? "red" : "gray"}
-          />
+          <AntDesign name={liked ? 'heart' : 'hearto'} size={28} color={liked ? 'red' : 'gray'} />
         </TouchableOpacity>
       </View>
       <Text style={styles.name}>{plant.name}</Text>
       <Text style={styles.scientific}>{plant.scientific_name}</Text>
-      
+
       <Text style={styles.section}>Description</Text>
       <Text>{plant.description}</Text>
 
@@ -63,39 +58,39 @@ function PlantDetailScreen({ route }) {
 const styles = StyleSheet.create({
   container: {
     padding: 16,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
   },
   imageWrapper: {
-    position: "relative",
+    position: 'relative',
   },
   image: {
-    width: "100%",
+    width: '100%',
     height: 250,
     borderRadius: 12,
     marginBottom: 16,
   },
   heart: {
-    position: "absolute",
+    position: 'absolute',
     top: 12,
     right: 12,
-    backgroundColor: "white",
+    backgroundColor: 'white',
     borderRadius: 20,
     padding: 6,
     elevation: 4,
   },
   name: {
     fontSize: 26,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   scientific: {
     fontSize: 18,
-    fontStyle: "italic",
-    color: "#777",
+    fontStyle: 'italic',
+    color: '#777',
     marginBottom: 16,
   },
   section: {
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginTop: 12,
   },
 });
