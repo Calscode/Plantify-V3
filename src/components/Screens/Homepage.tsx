@@ -30,7 +30,7 @@ const Homepage = ({ navigation }: Props) => {
           </View>
 
           <View style={styles.rightColumn}>
-            <WeatherBox />
+            <WeatherBox style={styles.weatherBoxFlex} />
             <QuizButton onPress={handleTakeQuiz} />
           </View>
         </View>
@@ -64,16 +64,10 @@ content: {
   flex: 1,
   paddingHorizontal: 20,
   paddingTop: 20,
-  paddingBottom: 20, // So it doesn't clash with bottom bar
+  paddingBottom: 20, 
   justifyContent: 'space-between',
-  alignItems: 'center',
+  alignItems: 'stretch',
 },
-  scroll: {
-    paddingHorizontal: 20,
-    paddingTop: 20,
-    paddingBottom: 100, // Make room for bottom bar + photo button
-    alignItems: 'center',
-  },
   title: {
     fontSize: 24,
     marginBottom: 20,
@@ -81,25 +75,31 @@ content: {
     fontWeight: 'bold',
     textAlign: 'center',
   },
-  topRow: {
+   topRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
     gap: 16,
     marginBottom: 20,
+    height: 240, 
+    alignItems: 'stretch', 
   },
   leftBox: {
     flex: 1,
-    backgroundColor: '#d1fae5',
-    borderRadius: 12,
+    borderRadius: 16,
     justifyContent: 'center',
     alignItems: 'center',
     overflow: 'hidden',
   },
-  rightColumn: {
+   rightColumn: {
     flex: 1,
-    justifyContent: 'space-between',
-    gap: 12,
+    flexDirection: 'column', 
+    justifyContent: 'flex-start',
+    alignItems: 'center', 
+  },
+  weatherBoxFlex: { 
+    flex: 1, 
+    marginBottom: 12, 
   },
   buttonGrid: {
     flexDirection: 'row',

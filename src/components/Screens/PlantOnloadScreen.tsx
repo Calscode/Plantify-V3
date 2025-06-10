@@ -13,7 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 function PlantOnloadScreen() {
   const [plant, setPlant] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError]=useState(false)
+  const [error] = useState(false);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -27,7 +27,6 @@ function PlantOnloadScreen() {
       .catch((err) => {
         console.error("Failed to fetch plants:", err);
         setLoading(false);
-        setError(true)
       });
   }, []);
 
@@ -39,14 +38,15 @@ function PlantOnloadScreen() {
       </View>
     );
   }
-  if(error){
-    return(
-        <view style={styles.centered}>
-              <Text style={{ color: 'red', fontSize: 12 }}>
-                    🥀 Failed to load Plant. 
-                  </Text>
-        </view>
-    )
+
+  if (error) {
+    return (
+      <View style={styles.centered}>
+        <Text style={{ color: 'red', fontSize: 12 }}>
+          🥀 Failed to load Plant.
+        </Text>
+      </View>
+    );
   }
 
   return (
@@ -59,8 +59,13 @@ function PlantOnloadScreen() {
         style={styles.image}
         imageStyle={{ borderRadius: 16 }}
       >
+        <View style={styles.topLeftBadge}>
+          <Text style={styles.badgeText}>Plant of the Day 🐝</Text>
+        </View>
+
+        {/* 底部 overlay */}
         <View style={styles.overlay}>
-          <Text style={styles.title}>{plant.name}</Text>
+          <Text style={styles.name}>{plant.name}</Text>
         </View>
       </ImageBackground>
     </TouchableOpacity>
@@ -82,19 +87,37 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    justifyContent: "flex-end",
+    justifyContent: "space-between", // 令 badge 喺頂、overlay 喺底
   },
   overlay: {
     backgroundColor: "rgba(0, 0, 0, 0.4)",
-  paddingVertical: 6,
+    paddingVertical: 8,
     alignItems: "center",
     borderBottomLeftRadius: 16,
     borderBottomRightRadius: 16,
   },
   title: {
     color: "#fff",
-    fontSize: 18,
+    fontSize: 16,
+    fontWeight: "600",
+  },
+  name: {
+    color: "#fff",
+    fontSize: 20,
     fontWeight: "bold",
+  },
+  topLeftBadge: {
+    alignSelf: "flex-start",
+    backgroundColor: "#ffffffcc",
+    margin: 8,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    borderRadius: 12,
+  },
+  badgeText: {
+    fontSize: 12,
+    fontWeight: "bold",
+    color: "#2e7d32",
   },
 });
 
