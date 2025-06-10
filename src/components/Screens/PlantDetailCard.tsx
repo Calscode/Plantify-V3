@@ -4,7 +4,7 @@ import { AntDesign } from "@expo/vector-icons";
 
 function PlantDetailScreen({ route }) {
     console.log("🚨 PlantDetailScreen route.params:", route.params);
-  const plant = route.params?.plant?.plant;
+  const plant = route.params?.plant;
   const [liked, setLiked] = useState(false);
 
   const toggleLike = () => {

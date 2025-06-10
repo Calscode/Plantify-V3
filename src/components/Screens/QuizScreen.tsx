@@ -317,8 +317,7 @@ export default function QuizScreen({ route, navigation }: Props) {
     if (currentIndex < currentGroup.length - 1) {
       setCurrentIndex((prev) => prev + 1);
     } else {
-      // If we finished all 5 questions in this group, clear selected and feedback,
-      // and stepping currentIndex to an invalid index causes render of round-completed.
+ 
       setCurrentIndex(currentGroup.length);
     }
     setSelectedOption(null);

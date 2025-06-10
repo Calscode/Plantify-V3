@@ -2,7 +2,6 @@ import React from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
 import HintsButton from "../HintsButton";
 
-// Adjust for your layout — header + footer
 const { height: screenHeight } = Dimensions.get("window");
 const headerHeight = 80;
 const footerHeight = 80;

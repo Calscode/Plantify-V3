@@ -39,7 +39,7 @@ const PhotoIdentifierWrapper = () => {
   const handlePlantMatched = (plant: any) => {
     if (plant) {
       console.log('🚀 Navigating to PlantDetail with:', plant);
-      navigation.navigate('PlantDetail', { plant });
+      navigation.navigate('PlantDetail', { plant: plant.plant });
     }
   };
 
