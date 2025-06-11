@@ -64,7 +64,7 @@ export const SearchScreen = () => {
               {item.img_url && (
                 <Image
                   source={{ uri: item.img_url }}
-                  style={{ width: 50, height: 50, borderRadius: 8 }}
+                  style={{ width: 50, height: 50, borderRadius: 8 , marginRight: 12}}
                 />
               )}
               <Text className="text-lg">{item.name}</Text>
