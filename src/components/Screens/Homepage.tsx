@@ -27,7 +27,7 @@ const Homepage = ({ navigation }: Props) => {
 
             
       <View style={styles.content}>
-        <Text style={styles.title}>🌿 Welcome to Plantify, {username}!</Text>
+        <Text style={styles.title}>Welcome to Plantify, {username}!</Text>
 
         <View style={styles.topRow}>
           <View style={styles.leftBox}>
