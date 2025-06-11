@@ -6,34 +6,33 @@ const { height: screenHeight } = Dimensions.get("window");
 const headerHeight = 80;
 const footerHeight = 80;
 const usableHeight = screenHeight - headerHeight - footerHeight;
-const buttonHeight = Math.floor((usableHeight / 4) * 1.1);
 
 const HintsScreen = ({ navigation }) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { height: usableHeight }]}>
       <HintsButton
         title="Veg"
         onPress={() => navigation.navigate("VegCard")}
         image={require("src/assets/vegetables.jpeg")}
-        height={buttonHeight}
+        style={styles.button}
       />
       <HintsButton
         title="Plants"
         onPress={() => navigation.navigate("PlantsCard")}
         image={require("src/assets/flowers.webp")}
-        height={buttonHeight}
+        style={styles.button}
       />
       <HintsButton
         title="Fruit"
         onPress={() => navigation.navigate("FruitCard")}
         image={require("src/assets/fruits.jpeg")}
-        height={buttonHeight}
+        style={styles.button}
       />
       <HintsButton
         title="Hints & Tips"
         onPress={() => navigation.navigate("HintsCard")}
         image={require("src/assets/gardening.webp")}
-        height={buttonHeight}
+        style={styles.button}
       />
     </View>
   );
@@ -43,6 +42,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f0fdf4",
+  },
+  button: {
+    flex: 1,
   },
 });
 

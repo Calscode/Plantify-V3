@@ -4,14 +4,13 @@ import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useUser } from '~/components/UserContext';
 
-
 export const ButtonBar = () => {
   const navigation = useNavigation();
   const { username } = useUser();
 
   return (
     <SafeAreaView edges={['bottom']} className="bg-white">
-      <View className="flex-row items-center justify-around border-t border-gray-300 bg-white py-3">
+      <View className="flex-row items-center justify-around border-t border-gray-300 bg-white py-1.5">
         <TouchableOpacity
           onPress={() => navigation.navigate('Home')}
           className="p-2"
@@ -30,10 +29,10 @@ export const ButtonBar = () => {
 
         <TouchableOpacity
           onPress={() => navigation.navigate('PhotoIdentifier')}
-          className="bg-green-500 p-4 rounded-full shadow-lg"
+          className="bg-green-500 p-3 rounded-full shadow-lg"
           activeOpacity={0.8}
         >
-          <Ionicons name="camera-outline" size={32} color="white" />
+          <Ionicons name="camera-outline" size={28} color="white" />
         </TouchableOpacity>
 
         <TouchableOpacity
