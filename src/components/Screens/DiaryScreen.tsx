@@ -1,63 +1,91 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
   TextInput,
   Button,
-  Image,
   FlatList,
-  TouchableOpacity,
   StyleSheet,
+  Alert,
+  TouchableOpacity,
 } from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
+import axios from 'axios';
 
 interface JournalEntry {
-  id: string;
-  text: string;
-  photoUri?: string;
-  timestamp: Date;
+  journal_entry_id: number;
+  body: string;
+  created_at: string;
 }
 
 export default function GardeningJournal() {
   const [entries, setEntries] = useState<JournalEntry[]>([]);
   const [text, setText] = useState('');
-  const [photoUri, setPhotoUri] = useState<string | undefined>(undefined);
+  const [loading, setLoading] = useState(false);
+  const userId = 1; // Replace with context if needed
 
-  const addEntry = () => {
-    if (!text && !photoUri) return;
+  useEffect(() => {
+    fetchEntries();
+  }, []);
 
-    const newEntry: JournalEntry = {
-      id: Date.now().toString(),
-      text,
-      photoUri,
-      timestamp: new Date(),
-    };
-
-    setEntries([newEntry, ...entries]); // latest first
-    setText('');
-    setPhotoUri(undefined);
+  const fetchEntries = () => {
+    axios
+      .get(`https://plantify-backend-n824.onrender.com/api/journals/${userId}`)
+      .then((res) => setEntries(res.data.journalEntries.reverse()))
+      .catch((err) => {
+        console.error('Fetch error:', err);
+        Alert.alert('Error', 'Failed to load journal entries.');
+      });
   };
 
-  const pickImage = async () => {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      quality: 0.6,
-    });
+  const addEntry = () => {
+    if (!text.trim()) return;
+    setLoading(true);
 
-    if (!result.canceled && result.assets.length > 0) {
-      setPhotoUri(result.assets[0].uri);
-    }
+    axios
+      .post(`https://plantify-backend-n824.onrender.com/api/journals`, {
+        user_id: userId,
+        body: text,
+      })
+      .then(() => {
+        setText('');
+        fetchEntries();
+      })
+      .catch((err) => {
+        console.error('Add entry error:', err);
+        Alert.alert('Error', 'Could not add entry.');
+      })
+      .finally(() => setLoading(false));
+  };
+
+  const deleteEntry = (id: number) => {
+    Alert.alert('Delete Entry', 'Are you sure you want to delete this entry?', [
+      { text: 'Cancel', style: 'cancel' },
+      {
+        text: 'Delete',
+        style: 'destructive',
+        onPress: () => {
+          axios
+            .delete(`https://plantify-backend-n824.onrender.com/api/journals/${id}`)
+            .then(() => fetchEntries())
+            .catch((err) => {
+              console.error('Delete error:', err);
+              Alert.alert('Error', 'Could not delete entry.');
+            });
+        },
+      },
+    ]);
   };
 
   const renderEntry = ({ item }: { item: JournalEntry }) => (
     <View style={styles.entry}>
-      <Text style={styles.timestamp}>
-        {item.timestamp.toLocaleString()}
-      </Text>
-      {item.text ? <Text style={styles.text}>{item.text}</Text> : null}
-      {item.photoUri ? (
-        <Image source={{ uri: item.photoUri }} style={styles.image} />
-      ) : null}
+      <Text style={styles.timestamp}>{new Date(item.created_at).toLocaleString()}</Text>
+      <Text style={styles.text}>{item.body}</Text>
+      <TouchableOpacity
+        style={styles.deleteButton}
+        onPress={() => deleteEntry(item.journal_entry_id)}
+      >
+        <Text style={styles.deleteText}>Delete</Text>
+      </TouchableOpacity>
     </View>
   );
 
@@ -71,17 +99,15 @@ export default function GardeningJournal() {
         multiline
         style={styles.input}
       />
-      {photoUri ? (
-        <Image source={{ uri: photoUri }} style={styles.preview} />
-      ) : null}
-      <View style={styles.buttons}>
-        <Button title="Pick a Photo" onPress={pickImage} />
-        <Button title="Add Entry" onPress={addEntry} />
-      </View>
+      <Button
+        title={loading ? 'Adding...' : 'Add Entry'}
+        onPress={addEntry}
+        disabled={loading}
+      />
       <FlatList
         data={entries}
         renderItem={renderEntry}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.journal_entry_id.toString()}
         contentContainerStyle={styles.entries}
       />
     </View>
@@ -107,18 +133,7 @@ const styles = StyleSheet.create({
     padding: 10,
     minHeight: 60,
     backgroundColor: '#fff',
-    marginBottom: 10,
-  },
-  preview: {
-    width: '100%',
-    height: 200,
-    marginBottom: 10,
-    borderRadius: 8,
-  },
-  buttons: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 16,
+    marginBottom: 12,
   },
   entries: {
     paddingBottom: 20,
@@ -137,10 +152,16 @@ const styles = StyleSheet.create({
     marginTop: 4,
     fontSize: 16,
   },
-  image: {
+  deleteButton: {
     marginTop: 8,
-    width: '100%',
-    height: 200,
-    borderRadius: 8,
+    alignSelf: 'flex-end',
+    backgroundColor: '#f87171',
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 6,
+  },
+  deleteText: {
+    color: '#fff',
+    fontWeight: '600',
   },
 });

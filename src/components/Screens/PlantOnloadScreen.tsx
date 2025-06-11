@@ -60,10 +60,10 @@ function PlantOnloadScreen() {
         imageStyle={{ borderRadius: 16 }}
       >
         <View style={styles.topLeftBadge}>
-          <Text style={styles.badgeText}>Plant of the Day 🐝</Text>
+          
+          <Text style={styles.badgeText}>Plant of the Day </Text>
         </View>
 
-        {/* 底部 overlay */}
         <View style={styles.overlay}>
           <Text style={styles.name}>{plant.name}</Text>
         </View>
@@ -84,10 +84,12 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     overflow: "hidden",
     elevation: 3,
+    
   },
   image: {
     flex: 1,
-    justifyContent: "space-between", // 令 badge 喺頂、overlay 喺底
+    justifyContent: "space-between", 
+    position:"relative"
   },
   overlay: {
     backgroundColor: "rgba(0, 0, 0, 0.4)",
@@ -95,12 +97,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderBottomLeftRadius: 16,
     borderBottomRightRadius: 16,
+    position:"absolute",
+    bottom: 0,
+    left:0,
+    right:0
   },
-  title: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "600",
-  },
+
   name: {
     color: "#fff",
     fontSize: 20,
@@ -112,9 +114,15 @@ const styles = StyleSheet.create({
     margin: 8,
     paddingVertical: 4,
     paddingHorizontal: 8,
-    borderRadius: 12,
+    borderRadius: 16,
+    position: "absolute",
+left :"15%",
+
+    width: 113,
   },
+
   badgeText: {
+  
     fontSize: 12,
     fontWeight: "bold",
     color: "#2e7d32",
