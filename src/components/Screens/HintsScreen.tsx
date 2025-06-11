@@ -38,24 +38,13 @@ const styles = StyleSheet.create({
   
   container: {
     flex: 1,
-<<<<<<< Updated upstream
     flexDirection: "column",
     backgroundColor: "#f0fdf4",
   },
   button: {
     flex: 1,
-=======
-    flexDirection:"column",
-    justifyContent:"space-between",
-    backgroundColor: "#f0fdf4"
-   
-   
->>>>>>> Stashed changes
   },
- button: {
-  height: 800,               
-  
-},
+ 
 });
 
 export default HintsScreen;
