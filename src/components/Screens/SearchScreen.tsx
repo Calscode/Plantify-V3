@@ -36,8 +36,13 @@ export const SearchScreen = () => {
     setQuery(text);
 
     const filtered = allPlants.filter((plant) =>
+
+
       plant?.name?.toLowerCase?.().includes(text.toLowerCase())
     );
+
+    //iflength 0 
+    //return <Text>No result</Text>
 
     setFilteredPlants(filtered);
   };
@@ -45,6 +50,8 @@ export const SearchScreen = () => {
   const handlePress = (plant) => {
     navigation.navigate('PlantDetail', { plant }); // ✅ Navigate to detail
   };
+
+
 
   return (
     <View className="flex-1 bg-white p-4">
@@ -54,6 +61,9 @@ export const SearchScreen = () => {
         value={query}
         onChangeText={handleSearch}
       />
+
+
+      
 
       <FlatList
         data={filteredPlants}
@@ -72,6 +82,10 @@ export const SearchScreen = () => {
           </TouchableOpacity>
         )}
       />
+
+
+
+
     </View>
   );
 };
