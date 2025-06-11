@@ -88,6 +88,7 @@ export default function GardeningJournal() {
   );
 }
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
