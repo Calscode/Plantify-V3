@@ -1,12 +1,11 @@
 import React from "react";
-import { TouchableOpacity, Text, StyleSheet, Dimensions, ImageBackground, View } from "react-native";
+import { TouchableOpacity, Text, StyleSheet, ImageBackground, View } from "react-native";
 
-// This will be passed from the parent now, so it's dynamic and safe
-const HintsButton = ({ title, onPress, image, height }) => (
-  <TouchableOpacity onPress={onPress} activeOpacity={0.9}>
+const HintsButton = ({ title, onPress, image, style }) => (
+  <TouchableOpacity onPress={onPress} activeOpacity={0.9} style={style}>
     <ImageBackground
       source={image}
-      style={[styles.imageBackground, { height }]}
+      style={styles.imageBackground}
       imageStyle={styles.imageStyle}
     >
       <View style={styles.overlay}>
@@ -18,7 +17,7 @@ const HintsButton = ({ title, onPress, image, height }) => (
 
 const styles = StyleSheet.create({
   imageBackground: {
-    width: "100%",
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
