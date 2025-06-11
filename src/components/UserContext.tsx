@@ -39,9 +39,21 @@ const toggleLikePlant = async (plantId: number) => {
 
   try {
     if (isLiked) {
-      
       const res = await axios.get(`https://plantify-backend-n824.onrender.com/api/liked_plants/${userId}`);
-      const match = res.data.find((p: any) => p.plant_id === plantId);
+
+      const plantsArray = res.data.liked_plants;
+      if (!Array.isArray(plantsArray)) {
+        console.error('Expected liked_plants to be an array but got:', plantsArray);
+        return;
+      }
+      
+      const match = plantsArray.find((p: any) => p.plant_id === plantId);
+
+      if (!match) {
+        console.error('No matching liked_plant found to unlike');
+        return;
+      }
+
       await axios.delete(`https://plantify-backend-n824.onrender.com/api/liked_plants/${match.liked_plant_id}`);
       setLikedPlantIds(prev => prev.filter(id => id !== plantId));
     } else {
