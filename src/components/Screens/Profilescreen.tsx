@@ -1,24 +1,38 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Image, FlatList, StyleSheet } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useRoute } from '@react-navigation/native';
 import { useUser } from '../UserContext';
-import { RootStackParamList } from '../../../App';
+import axios from 'axios';
+import PlantCard from './PlantCard';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Profile'>;
-
-export default function ProfileScreen() {
+export default function ProfileScreen({ navigation }) {
   const route = useRoute();
-  const { username } = useUser();
+  const { username, userId, likedPlantIds, fetchLikedPlants } = useUser();
+  const [avatarUri, setAvatarUri] = useState(null);
+  const [allPlants, setAllPlants] = useState([]);
+  const [filteredPlants, setFilteredPlants] = useState([]);
 
-   const [avatarUri, setAvatarUri] = useState<string | null>(null);
+  useEffect(() => {
+    if (userId) {
+      fetchLikedPlants();
+    }
+  }, [userId]);
 
-  const savedItems = [
-    { id: '1', name: 'Rose' },
-    { id: '2', name: 'Sunflower' },
-    { id: '3', name: 'Cactus' },
-  ];
+  useEffect(() => {
+    axios.get('https://plantify-backend-n824.onrender.com/api/plants')
+      .then(res => setAllPlants(res.data.plants))
+      .catch(err => console.error("Error fetching all plants:", err));
+  }, []);
+
+  useEffect(() => {
+    if (allPlants.length > 0 && likedPlantIds.length > 0) {
+      const matched = allPlants.filter(plant => likedPlantIds.includes(plant.plant_id));
+      setFilteredPlants(matched);
+    } else {
+      setFilteredPlants([]);
+    }
+  }, [allPlants, likedPlantIds]);
 
   const pickAvatar = () => {
     ImagePicker.launchImageLibraryAsync({
@@ -41,31 +55,34 @@ export default function ProfileScreen() {
         <Text style={styles.title}>Profile</Text>
       </View>
 
- <View style={styles.avatarSection}>
-  <TouchableOpacity onPress={pickAvatar}>
-    {avatarUri ? (
-      <Image source={{ uri: avatarUri }} style={styles.avatar} />
-    ) : (
-      <View style={styles.avatarPlaceholder}>
-        <Text style={styles.avatarPlaceholderText}>👤</Text>
+      <View style={styles.avatarSection}>
+        <TouchableOpacity onPress={pickAvatar}>
+          {avatarUri ? (
+            <Image source={{ uri: avatarUri }} style={styles.avatar} />
+          ) : (
+            <View style={styles.avatarPlaceholder}>
+              <Text style={styles.avatarPlaceholderText}>👤</Text>
+            </View>
+          )}
+        </TouchableOpacity>
+        <Text style={styles.username}>@{username}</Text>
       </View>
-    )}
-  </TouchableOpacity>
 
-  <Text style={styles.username}>@{username}</Text>
-</View>
+      <Text style={styles.savedTitle}>Saved Plants</Text>
 
-      <Text style={styles.savedTitle}>Saved Items</Text>
       <FlatList
-        data={savedItems}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.savedItem}>
-            <Text style={styles.savedItemText}>{item.name}</Text>
-          </View>
-        )}
-        ListEmptyComponent={<Text>No saved items</Text>}
-      />
+  data={filteredPlants}
+  keyExtractor={(item) => item.plant_id.toString()}
+  numColumns={2}
+  renderItem={({ item }) => (
+    <View style={styles.gridItem}>
+      <PlantCard plant={item} navigation={navigation} />
+    </View>
+  )}
+  columnWrapperStyle={{ justifyContent: 'space-between' }}
+  contentContainerStyle={{ paddingBottom: 100 }}
+  ListEmptyComponent={<Text>No saved plants yet.</Text>}
+/>
     </View>
   );
 }
@@ -76,6 +93,11 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: '#fff',
   },
+  gridItem: {
+  flex: 1,
+  margin: 8,
+  maxWidth: '48%', 
+},
   topBar: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -86,9 +108,9 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: 'bold',
   },
-  avatarButton: {
-    alignSelf: 'center',
-    marginBottom: 12,
+  avatarSection: {
+    alignItems: 'center',
+    marginBottom: 24,
   },
   avatar: {
     width: 120,
@@ -109,7 +131,12 @@ const styles = StyleSheet.create({
     fontSize: 48,
     color: 'grey',
   },
- 
+  username: {
+    fontSize: 20,
+    fontWeight: '600',
+    marginTop: 8,
+    color: '#333',
+  },
   savedTitle: {
     fontSize: 22,
     fontWeight: 'bold',
@@ -123,14 +150,4 @@ const styles = StyleSheet.create({
   savedItemText: {
     fontSize: 18,
   },
-  avatarSection: {
-  alignItems: 'center',
-  marginBottom: 24,
-},
-username: {
-  fontSize: 20,
-  fontWeight: '600',
-  marginTop: 8,
-  color: '#333',
-},
 });
