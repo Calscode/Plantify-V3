@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
-import { TouchableOpacity, StyleSheet, Animated } from 'react-native';
+import { TouchableOpacity, StyleSheet, Animated, ImageBackground } from 'react-native';
+
 
 export default function QuizButton({ onPress }: { onPress: () => void }) {
   const rotateAnim = useRef(new Animated.Value(0)).current;
@@ -21,17 +22,20 @@ export default function QuizButton({ onPress }: { onPress: () => void }) {
     ).start();
   }, []);
 
-  const rotate = rotateAnim.interpolate({
-    inputRange: [-1, 1],
-    outputRange: ['-2deg', '2deg'],
-  });
+  // const rotate = rotateAnim.interpolate({
+  //   inputRange: [-1, 1],
+  //   outputRange: ['-2deg', '2deg'],
+  // });
 
   return (
     <TouchableOpacity style={styles.wrapper} onPress={onPress}>
-      <Animated.Image
+      <ImageBackground
         source={require('src/assets/takequizbutton.jpg')} 
-        style={[styles.image, { transform: [{ rotate }] }]}
+        style={[styles.image]}
+        resizeMode="contain"
+        
       />
+
     </TouchableOpacity>
   );
 }
@@ -40,10 +44,19 @@ const styles = StyleSheet.create({
   wrapper: {
     alignItems: 'center',
     justifyContent: 'center',
+    height:"100%",
+    overflow:"hidden",
+    borderRadius: 10
+    
+    
+  
   },
   image: {
-    width: 140,
-    height: 120,
-    resizeMode: 'contain',
-  },
+    
+    width: 150,
+    height: 130,
+    resizeMode: "center",
+    
+
+  }
 });

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, Button, StyleSheet, ImageBackground } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../App';
 import PlantOnloadScreen from './PlantOnloadScreen';
@@ -20,7 +20,12 @@ const Homepage = ({ navigation }: Props) => {
   };
 
   return (
+
+
+    
     <SafeAreaView style={styles.safeArea}>
+
+            
       <View style={styles.content}>
         <Text style={styles.title}>🌿 Welcome to Plantify, {username}!</Text>
 
@@ -31,7 +36,11 @@ const Homepage = ({ navigation }: Props) => {
 
           <View style={styles.rightColumn}>
             <WeatherBox style={styles.weatherBoxFlex} />
-            <QuizButton onPress={handleTakeQuiz} />
+
+              <View style={styles.rightColumn}>
+            <QuizButton style= {styles.quizContainer}onPress={handleTakeQuiz} />
+            </View>
+
           </View>
         </View>
 
@@ -46,7 +55,12 @@ const Homepage = ({ navigation }: Props) => {
         </View>
 
         <TouchableOpacity style={styles.fullWidthButton} onPress={() => navigation.navigate('Journal')}>
-          <Text style={styles.buttonText}>Gardening Journal</Text>
+        
+        
+
+                    <Text style={styles.buttonText}>Gardening Journal</Text>
+
+
         </TouchableOpacity>
 
         <View style={styles.bottomSpacer} />
@@ -58,7 +72,8 @@ const Homepage = ({ navigation }: Props) => {
 const styles = StyleSheet.create({
  safeArea: {
   flex: 1,
-  backgroundColor: '#f0fdf4',
+  backgroundColor: '#ffffff',
+  //
 },
 content: {
   flex: 1,
@@ -71,6 +86,7 @@ content: {
   title: {
     fontSize: 24,
     marginBottom: 20,
+
     color: '#14532d',
     fontWeight: 'bold',
     textAlign: 'center',
@@ -79,58 +95,94 @@ content: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
-    gap: 16,
+    gap: 7,
     marginBottom: 20,
     height: 240, 
     alignItems: 'stretch', 
+    
   },
   leftBox: {
     flex: 1,
     borderRadius: 16,
     justifyContent: 'center',
     alignItems: 'center',
-    overflow: 'hidden',
+    overflow: "hidden",
+ 
+    
   },
    rightColumn: {
     flex: 1,
     flexDirection: 'column', 
+    gap: 16,
     justifyContent: 'flex-start',
     alignItems: 'center', 
+    overflow: "hidden",
+    
   },
   weatherBoxFlex: { 
     flex: 1, 
     marginBottom: 12, 
+    
+  },
+  quizContainer:{
+    borderRadius: 100,
+    elevation: 3,
+
   },
   buttonGrid: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
     marginBottom: 12,
+    height:50
+    //added this 
   },
   squareButton: {
     flex: 1,
-    backgroundColor: '#bbf7d0',
+    backgroundColor: '#DFF5E1',
     marginHorizontal: 5,
     padding: 16,
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
+    elevation: 3,
+    
+    
   },
   fullWidthButton: {
-    width: '100%',
-    backgroundColor: '#a7f3d0',
-    padding: 16,
+    flex: 1,
+    flexDirection:"row",
+    backgroundColor: '#DFF5E1',
+    marginHorizontal: 5,
+    // padding: 16,
     borderRadius: 10,
+    
+    justifyContent: 'center',
     alignItems: 'center',
+    elevation: 3,
+    
+    
+    
   },
   buttonText: {
     color: '#065f46',
     fontSize: 16,
     fontWeight: '600',
+    position:"absolute",
+    
+    
   },
   bottomSpacer: {
     height: 20,
-  },
+  },image: {
+    
+    width: "100%",
+    height: "100%",
+    resizeMode: "center",
+    
+    
+
+  }
 });
 
 export default Homepage;
