@@ -1,24 +1,26 @@
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { useState } from 'react';
 import { AntDesign } from '@expo/vector-icons';
+import { useUser } from '../UserContext';
 
 function PlantDetailScreen({ route }) {
-    console.log("🚨 PlantDetailScreen route.params:", route.params);
   const plant = route.params?.plant;
-  const [liked, setLiked] = useState(false);
+  const { likedPlantIds, toggleLikePlant } = useUser();
 
-  const toggleLike = () => {
-    setLiked(!liked);
-  };
+  const isLiked = likedPlantIds.includes(plant.plant_id);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.imageWrapper}>
         <Image source={{ uri: plant.img_url }} style={styles.image} />
-        <TouchableOpacity style={styles.heart} onPress={toggleLike}>
-          <AntDesign name={liked ? 'heart' : 'hearto'} size={28} color={liked ? 'red' : 'gray'} />
+        <TouchableOpacity style={styles.heart} onPress={() => toggleLikePlant(plant.plant_id)}>
+          <AntDesign
+            name={isLiked ? 'heart' : 'hearto'}
+            size={28}
+            color={isLiked ? 'red' : 'gray'}
+          />
         </TouchableOpacity>
       </View>
+
       <Text style={styles.name}>{plant.name}</Text>
       <Text style={styles.scientific}>{plant.scientific_name}</Text>
 

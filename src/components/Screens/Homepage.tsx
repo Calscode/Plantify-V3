@@ -37,7 +37,7 @@ const Homepage = ({ navigation }: Props) => {
 
         <View style={styles.buttonGrid}>
           <TouchableOpacity style={styles.squareButton} onPress={() => navigation.navigate('Discovery')}>
-            <Text style={styles.buttonText}>Discover Plants 🌱</Text>
+            <Text style={styles.buttonText}>Discover Plants </Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.squareButton} onPress={() => navigation.navigate('HintsScreen')}>
@@ -46,7 +46,7 @@ const Homepage = ({ navigation }: Props) => {
         </View>
 
         <TouchableOpacity style={styles.fullWidthButton} onPress={() => navigation.navigate('Journal')}>
-          <Text style={styles.buttonText}>Gardening Journal 📝</Text>
+          <Text style={styles.buttonText}>Gardening Journal</Text>
         </TouchableOpacity>
 
         <View style={styles.bottomSpacer} />
