@@ -8,17 +8,18 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
 
 const LoginScreen = ({ navigation }: Props) => {
   const [username, setLocalUsername] = useState('');
-  const { setUsername } = useUser();
+  const { setUsername, loginAsGuest } = useUser(); // ✅ Hook called inside component
 
   const handleContinue = () => {
-    setUsername(username.trim()); 
+    setUsername(username.trim());
     navigation.replace('Home');
   };
 
- const handleGuest = () => {
-  setUsername('Guest'); 
-  navigation.replace('Home');
-};
+  const handleGuest = () => {
+    loginAsGuest();
+    setUsername('Guest'); // Optional: show @Guest on profile
+    navigation.replace('Home');
+  };
 
   return (
     <View style={styles.container}>
@@ -45,41 +46,25 @@ const LoginScreen = ({ navigation }: Props) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f0fdf4',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-  },
-  title: {
-    fontSize: 26,
-    marginBottom: 24,
-    fontWeight: 'bold',
-    color: '#14532d',
-  },
+  container: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 20 },
+  title: { fontSize: 28, fontWeight: 'bold', marginBottom: 20 },
   input: {
-    width: '80%',
-    borderWidth: 1,
+    width: '100%',
+    height: 50,
     borderColor: '#ccc',
-    borderRadius: 6,
-    padding: 12,
-    marginBottom: 20,
-    backgroundColor: '#fff',
+    borderWidth: 1,
+    paddingHorizontal: 16,
+    marginBottom: 16,
+    borderRadius: 8,
   },
   button: {
+    width: '100%',
     paddingVertical: 14,
-    paddingHorizontal: 32,
     borderRadius: 8,
-    width: '80%',
     alignItems: 'center',
-    marginVertical: 6,
+    marginTop: 12,
   },
-  buttonText: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: '600',
-  },
+  buttonText: { color: 'white', fontWeight: 'bold', fontSize: 16 },
 });
 
 export default LoginScreen;

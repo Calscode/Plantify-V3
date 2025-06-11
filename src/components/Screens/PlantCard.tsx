@@ -1,17 +1,14 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { useState } from "react";
 import { AntDesign } from '@expo/vector-icons';
+import { useUser } from '../UserContext'; 
 
 function PlantCard({ plant }) {
   const navigation = useNavigation();
-  const [liked, setLiked] = useState(false);
+  const { likedPlantIds, toggleLikePlant } = useUser();
 
-  const toggleLike = () => {
-    setLiked(!liked);
+  const isLiked = likedPlantIds.includes(plant.plant_id); 
   
-  };
-
   return (
     <TouchableOpacity
       style={styles.card}
@@ -19,11 +16,11 @@ function PlantCard({ plant }) {
     >
       <View style={styles.imageWrapper}>
         <Image source={{ uri: plant.img_url }} style={styles.image} />
-        <TouchableOpacity style={styles.heart} onPress={toggleLike}>
+        <TouchableOpacity style={styles.heart} onPress={() => toggleLikePlant(plant.plant_id)}>
           <AntDesign
-            name={liked ? "heart" : "hearto"}
+            name={isLiked ? "heart" : "hearto"}
             size={24}
-            color={liked ? "red" : "gray"}
+            color={isLiked ? "red" : "gray"}
           />
         </TouchableOpacity>
       </View>
