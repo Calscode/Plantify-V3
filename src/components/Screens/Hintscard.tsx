@@ -1,81 +1,174 @@
-import React from "react";
-import { View, Text, ScrollView, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  FlatList,
+  Dimensions,
+  StyleSheet,
+  ScrollView,
+  ImageBackground
+} from "react-native";
 
-function HintsCard() {
-  return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.sectionTitle}>🌿 Gardening Hints & Tips: A Quick Guide 🌱</Text>
+const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
-      <Text style={styles.subsectionTitle}>A Brief History of Gardening 🏺🌻</Text>
-      <Text style={styles.paragraph}>
-        Gardening is one of humanity’s oldest hobbies — and necessities! People began cultivating plants over 10,000 years ago...
-      </Text>
+const data = [
+  {
+  id: "1",
+  title: "🌿 Gardening Hints & Tips: A Quick Guide 🌱",
+  bullets: [
+    "Gardening is one of humanity’s oldest and most rewarding activities.",
+    "People have been cultivating plants for over 10,000 years, shaping civilizations and nourishing communities.",
+    "Whether you have a sprawling backyard or just a sunny windowsill, gardening connects us to nature’s rhythms and cycles.",
+    "Gardening is a wonderful way to grow both food and happiness."
+  ],
+},
+  {
+    id: "2",
+    title: "Best Practices to Grow Like a Pro 🌞💧",
+    bullets: [
+      "Know Your Soil: Start with a soil test to check pH and nutrient levels. Adding organic compost boosts fertility and water retention.",
+      "Right Plant, Right Place: Choose plants that fit your climate, soil type, and sunlight availability for the best growth.",
+      "Water Wisely: Deep watering encourages roots to grow strong and deep. Using mulch helps keep moisture in and weeds out.",
+      "Feed Consistently: Regularly add balanced fertilizers or compost tea, but avoid overfeeding which can harm plants.",
+    ],
+  },
+  {
+    id: "3",
+    title: "Best Practices to Grow Like a Pro 🌞💧 (cont.) & Things to Remember 🌼📝",
+    bullets: [
+      "Rotate & Companion Plant: Switch crops yearly and plant companions together to reduce diseases and pests naturally.",
+      "Pest Patrol: Use natural remedies and attract helpful insects like ladybugs and bees to keep your garden healthy.",
+      "Prune & Harvest: Timely pruning encourages stronger growth and better yields. Harvest fruits and veggies at their peak for flavor.",
+      "Gardening takes patience — expect some trial and error. Each season brings new lessons!",
+      "Keep a garden journal. Recording successes and challenges helps improve your skills over time.",
+      "Connect with local gardeners or online communities for support and inspiration.",
+      "Enjoy the journey — growth happens not just above ground, but beneath it too!",
+    ],
+  },
+  {
+    id: "4",
+    title: "Quick Hints & Tips ⚡🌿",
+    bullets: [
+      "Start small — a few pots or a small patch is perfect when you’re just getting started.",
+      "Use containers or raised beds if your garden soil isn’t great or to control conditions better.",
+      "Clean up fallen leaves and plant debris to prevent diseases and pests.",
+      "Mulch is your low-maintenance secret weapon: it conserves moisture and keeps weeds down.",
+      "Support tall or floppy plants early with stakes or cages before they grow too large.",
+      "Plant pollinator-friendly flowers nearby to attract bees and butterflies, helping your garden thrive naturally.",
+      "Save seeds from your best plants to grow your own heirlooms next season.",
+    ],
+    joke: "🌸 Gardening Joke: Why did the gardener quit? Because his celery wasn’t high enough! 🥬😂",
+  },
+];
 
-      <Text style={styles.subsectionTitle}>Best Practices to Grow Like a Pro 🌞💧</Text>
-      <Text style={styles.bullet}>• Know Your Soil: Test pH and add compost to improve fertility.</Text>
-      <Text style={styles.bullet}>• Right Plant, Right Place: Match plant needs to climate, soil & sun.</Text>
-      <Text style={styles.bullet}>• Water Wisely: Deep watering builds strong roots. Mulch helps!</Text>
-      <Text style={styles.bullet}>• Feed Consistently: Use compost and balanced fertilizers carefully.</Text>
-      <Text style={styles.bullet}>• Rotate & Companion Plant: Reduce disease, boost plant teamwork.</Text>
-      <Text style={styles.bullet}>• Pest Patrol: Use natural controls and attract beneficial insects.</Text>
-      <Text style={styles.bullet}>• Prune & Harvest: Encourage health and flavor with good timing.</Text>
+const HintsCard = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
 
-      <Text style={styles.subsectionTitle}>Things to Remember 🌼📝</Text>
-      <Text style={styles.paragraph}>• Gardening takes patience — don’t fear a few failures.</Text>
-      <Text style={styles.paragraph}>• Keep a journal. Each season teaches something new.</Text>
-      <Text style={styles.paragraph}>• Connect with your local gardening community for support.</Text>
-      <Text style={styles.paragraph}>• Enjoy the journey. Growth happens both above and below ground!</Text>
+  const onViewRef = React.useRef(({ viewableItems }) => {
+    if (viewableItems.length > 0) {
+      setActiveIndex(viewableItems[0].index);
+    }
+  });
 
-      <Text style={styles.subsectionTitle}>Quick Hints & Tips ⚡🌿</Text>
-      <Text style={styles.bullet}>• Start small — a few pots are perfect to begin learning.</Text>
-      <Text style={styles.bullet}>• Use containers or raised beds in poor soil areas.</Text>
-      <Text style={styles.bullet}>• Clean up plant debris and rotate crops seasonally.</Text>
-      <Text style={styles.bullet}>• Mulch is your low-effort best friend.</Text>
-      <Text style={styles.bullet}>• Support tall plants with stakes or cages early.</Text>
-      <Text style={styles.bullet}>• Plant flowers to invite pollinators and skip harmful pesticides.</Text>
-      <Text style={styles.bullet}>• Save seeds from your favorite plants!</Text>
+  const viewConfigRef = React.useRef({ viewAreaCoveragePercentThreshold: 50 });
 
-      <Text style={styles.joke}>🌸 Gardening Joke: Why did the gardener quit? Because his celery wasn’t high enough! 🥬😂</Text>
-    </ScrollView>
+  const renderItem = ({ item }) => (
+    <View style={[styles.page, { width: SCREEN_WIDTH }]}>
+      <ImageBackground
+        source={require("../../assets/whitebackground.jpeg")}
+        style={styles.background}
+        resizeMode="cover"
+      >
+        <ScrollView contentContainerStyle={styles.scrollInner}>
+          <Text style={styles.title}>{item.title}</Text>
+          {item.content && <Text style={styles.content}>{item.content}</Text>}
+
+          {item.bullets &&
+            item.bullets.map((bullet, i) => (
+              <Text key={i} style={styles.bullet}>
+                • {bullet}
+              </Text>
+            ))}
+
+          {item.joke && <Text style={styles.joke}>{item.joke}</Text>}
+        </ScrollView>
+      </ImageBackground>
+    </View>
   );
-}
+
+  return (
+    <View style={{ flex: 1, backgroundColor: "#fff" }}>
+      <FlatList
+        data={data}
+        keyExtractor={(item) => item.id}
+        horizontal
+        pagingEnabled
+        showsHorizontalScrollIndicator={false}
+        onViewableItemsChanged={onViewRef.current}
+        viewabilityConfig={viewConfigRef.current}
+        renderItem={renderItem}
+      />
+      <View style={styles.pagination}>
+        {data.map((_, i) => (
+          <View
+            key={i}
+            style={[
+              styles.dot,
+              { backgroundColor: i === activeIndex ? "#713f12" : "#d6d3d1" },
+            ]}
+          />
+        ))}
+      </View>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-  container: {
-    paddingVertical: 20,
-    paddingHorizontal: 16,
-    backgroundColor: "#f0fdf4", // soft yellow-beige
+  page: {
+    padding: 20,
+    justifyContent: "center",
   },
-  sectionTitle: {
-    fontSize: 20,
+  background: {
+    flex: 1,
+    justifyContent: "center",
+    padding: 20,
+  },
+  scrollInner: {
+    paddingBottom: 40,
+  },
+  title: {
+    fontSize: 24,
     fontWeight: "bold",
+    color: "#14532d",
     marginBottom: 12,
-    color: "#713f12",
   },
-  subsectionTitle: {
-    fontSize: 17,
-    fontWeight: "600",
-    marginTop: 20,
-    marginBottom: 6,
-    color: "#854d0e",
-  },
-  paragraph: {
-    fontSize: 15,
-    lineHeight: 22,
-    marginBottom: 8,
+  content: {
+    fontSize: 19,
     color: "#374151",
+    marginBottom: 15,
   },
   bullet: {
-    fontSize: 15,
+    fontSize: 19,
     marginLeft: 10,
-    marginBottom: 6,
-    color: "#3f6212",
+    marginBottom: 8,
+    color: "#374151", 
   },
   joke: {
     fontStyle: "italic",
-    fontSize: 15,
+    fontSize: 19,
     marginTop: 20,
-    color: "#b45309",
+    color: "#065f46",
+  },
+  pagination: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginVertical: 15,
+  },
+  dot: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    marginHorizontal: 7,
   },
 });
 

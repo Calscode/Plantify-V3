@@ -1,15 +1,10 @@
 import React from "react";
-import { View, StyleSheet, Dimensions } from "react-native";
+import { View, StyleSheet } from "react-native";
 import HintsButton from "../HintsButton";
-
-const { height: screenHeight } = Dimensions.get("window");
-const headerHeight = 80;
-const footerHeight = 80;
-const usableHeight = screenHeight - headerHeight - footerHeight;
 
 const HintsScreen = ({ navigation }) => {
   return (
-    <View style={[styles.container, { height: usableHeight }]}>
+    <View style={styles.container}>
       <HintsButton
         title="Veg"
         onPress={() => navigation.navigate("VegCard")}
@@ -41,6 +36,7 @@ const HintsScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: "column",
     backgroundColor: "#f0fdf4",
   },
   button: {
