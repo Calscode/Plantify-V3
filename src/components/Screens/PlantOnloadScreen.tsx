@@ -59,10 +59,10 @@ function PlantOnloadScreen() {
         style={styles.image}
         imageStyle={{ borderRadius: 16 }}
       >
-        <View style={styles.topLeftBadge}>
+        {/* <View style={styles.topLeftBadge}>
           
-          <Text style={styles.badgeText}>Plant of the Day </Text>
-        </View>
+          <Text style={styles.badgeText}>Click  </Text>
+        </View> */}
 
         <View style={styles.overlay}>
           <Text style={styles.name}>{plant.name}</Text>
