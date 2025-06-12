@@ -372,6 +372,7 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     justifyContent: 'center',
     flexGrow: 1,
+     backgroundColor: '#f5fff5',
   },
   header: {
     fontSize: 24,
