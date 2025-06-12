@@ -37,11 +37,14 @@ const PhotoIdentifierWrapper = () => {
   };
 
   const handlePlantMatched = (plant: any) => {
-    if (plant) {
-      console.log('🚀 Navigating to PlantDetail with:', plant);
-      navigation.navigate('PlantDetail', { plant: plant.plant });
-    }
-  };
+  if (plant && plant.plant) {
+    console.log('🚀 Navigating to PlantDetail with:', plant);
+    navigation.navigate('PlantDetail', { plant: plant.plant });
+  } else {
+    console.warn('🔍 Plant not identified');
+    setError('Image not recognised. Please ensure the photo clearly shows a plant, fruit, or vegetable.');
+  }
+};
 
   return (
     <ImageBackground
